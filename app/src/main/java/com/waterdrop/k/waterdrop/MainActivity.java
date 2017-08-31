@@ -73,45 +73,33 @@ public class MainActivity extends Activity {
             }
         });
 
-        checkListPageTab.setOnClickListener(new View.OnClickListener() {
+        chatBotPageTab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (mainViewFlipper.getDisplayedChild() == 2 && pageTabFlag && isInDanger) {
+                if (mainViewFlipper.getDisplayedChild() == 1 && pageTabFlag) {
                     pageTabFlag = false;
                     mainViewFlipper.setInAnimation(AnimationUtils.loadAnimation(MainActivity.this, R.anim.push_right_in));
                     mainViewFlipper.setOutAnimation(AnimationUtils.loadAnimation(MainActivity.this, R.anim.push_right_out));
                     mainViewFlipper.showPrevious();
                     pageTabFlag = true;
-                } else if (mainViewFlipper.getDisplayedChild() == 2 && pageTabFlag && !isInDanger) {
-                    pageTabFlag = false;
-                    mainViewFlipper.setInAnimation(AnimationUtils.loadAnimation(MainActivity.this, R.anim.push_right_in));
-                    mainViewFlipper.setOutAnimation(AnimationUtils.loadAnimation(MainActivity.this, R.anim.push_right_out));
-                    mainViewFlipper.showNext();
-                    pageTabFlag = true;
                 }
-                chatBotPageTab.setBackgroundColor(Color.parseColor("#DDDDDD"));
-                checkListPageTab.setBackgroundColor(Color.parseColor("#CCCCCC"));
+                checkListPageTab.setBackgroundColor(Color.parseColor("#DDDDDD"));
+                chatBotPageTab.setBackgroundColor(Color.parseColor("#CCCCCC"));
             }
         });
 
-        chatBotPageTab.setOnClickListener(new View.OnClickListener() {
+        checkListPageTab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 if (mainViewFlipper.getDisplayedChild() == 0 && pageTabFlag) {
                     pageTabFlag = false;
                     mainViewFlipper.setInAnimation(AnimationUtils.loadAnimation(MainActivity.this, R.anim.push_left_in));
                     mainViewFlipper.setOutAnimation(AnimationUtils.loadAnimation(MainActivity.this, R.anim.push_left_out));
-                    mainViewFlipper.showPrevious();
-                    pageTabFlag = true;
-                } else if (mainViewFlipper.getDisplayedChild() == 1 && pageTabFlag) {
-                    pageTabFlag = false;
-                    mainViewFlipper.setInAnimation(AnimationUtils.loadAnimation(MainActivity.this, R.anim.push_left_in));
-                    mainViewFlipper.setOutAnimation(AnimationUtils.loadAnimation(MainActivity.this, R.anim.push_left_out));
                     mainViewFlipper.showNext();
                     pageTabFlag = true;
                 }
-                checkListPageTab.setBackgroundColor(Color.parseColor("#DDDDDD"));
-                chatBotPageTab.setBackgroundColor(Color.parseColor("#CCCCCC"));
+                chatBotPageTab.setBackgroundColor(Color.parseColor("#DDDDDD"));
+                checkListPageTab.setBackgroundColor(Color.parseColor("#CCCCCC"));
             }
         });
 
