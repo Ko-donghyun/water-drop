@@ -2,16 +2,29 @@ package com.waterdrop.k.waterdrop;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.widget.DrawerLayout;
 import android.view.View;
 import android.view.animation.AnimationUtils;
+import android.widget.AdapterView;
+import android.widget.CompoundButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ListView;
+import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 import android.widget.ViewFlipper;
+
+import com.waterdrop.k.waterdrop.DataBase.CheckList;
+import com.waterdrop.k.waterdrop.Dialog.CheckListAddDialog;
+import com.waterdrop.k.waterdrop.ListViewAdapter.CheckListViewAdapter;
+import com.waterdrop.k.waterdrop.SpinnerAdapter.MyCheckListSpinnerAdapter;
 
 public class MainActivity extends Activity {
     TextView checkListPageTab;
@@ -27,6 +40,25 @@ public class MainActivity extends Activity {
     ViewFlipper mainViewFlipper;
     boolean pageTabFlag = true;
     boolean isInDanger = false;
+
+    /**
+     * 체크리스트 페이지
+     */
+    public static SharedPreferences lastSelectedCheckListInventoryIdPreference;
+    public static SharedPreferences.Editor lastSelectedCheckListInventoryIdEditor;
+    Long lastSelectedCheckListInventoryId;
+
+    TextView checkListItemAddButton;
+
+    CheckList myCheckListDataBase;
+    final String myCheckListDataBaseName = "mychecklist.db";
+    final int myCheckListDataBaseVersion = 1;
+
+    CheckListViewAdapter checkListViewAdapter;
+    ListView myCheckListView;
+
+    Spinner myCheckListSpinner;
+    MyCheckListSpinnerAdapter myCheckListSpinnerAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -123,5 +155,83 @@ public class MainActivity extends Activity {
             }
         });
 
+
+
+        /*
+         * 체크리스트 페이지
+         */
+        lastSelectedCheckListInventoryIdPreference = getSharedPreferences("lastSelectedCheckListInventoryId", Activity.MODE_PRIVATE);
+        lastSelectedCheckListInventoryId = lastSelectedCheckListInventoryIdPreference.getLong("lastSelectedCheckListInventoryId", 1);
+
+
+        checkListItemAddButton = (TextView) findViewById(R.id.check_list_item_add_button);
+        myCheckListDataBase = new CheckList(this, myCheckListDataBaseName, null, myCheckListDataBaseVersion);
+
+        checkListViewAdapter = new CheckListViewAdapter(MainActivity.this);
+        myCheckListSpinnerAdapter = new MyCheckListSpinnerAdapter();
+
+        myCheckListView = (ListView) findViewById(R.id.my_check_list_view);
+        myCheckListSpinner = (Spinner)findViewById(R.id.my_check_list_spinner);
+
+        getMyCheckListSpinnerData();
+        getMyCheckList(lastSelectedCheckListInventoryId);
+
+        myCheckListSpinner.setAdapter(myCheckListSpinnerAdapter);
+        myCheckListView.setAdapter(checkListViewAdapter);
+
+        int spinnerPosition = myCheckListSpinnerAdapter.getIndex(myCheckListSpinner, lastSelectedCheckListInventoryId);
+        myCheckListSpinner.setSelection(spinnerPosition);
+
+        myCheckListSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                lastSelectedCheckListInventoryId = myCheckListSpinnerAdapter.getItem(i).getId();
+
+                lastSelectedCheckListInventoryIdEditor = lastSelectedCheckListInventoryIdPreference.edit();
+                lastSelectedCheckListInventoryIdEditor.putLong("lastSelectedCheckListInventoryId", lastSelectedCheckListInventoryId);
+                lastSelectedCheckListInventoryIdEditor.apply();
+                getMyCheckList(lastSelectedCheckListInventoryId);
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+
+            }
+        });
+
+    }
+
+    private void getMyCheckListSpinnerData() {
+        SQLiteDatabase sqLiteDatabase = myCheckListDataBase.getReadableDatabase();
+        Cursor cursor = sqLiteDatabase.rawQuery("SELECT * FROM checklistinventory", null);
+
+        if (cursor.getCount() != 0) {
+            cursor.moveToFirst();
+            do {
+                myCheckListSpinnerAdapter.addItem(cursor.getInt(0), cursor.getString(1));
+            } while (cursor.moveToNext());
+
+            cursor.close();
+        }
+        sqLiteDatabase.close();
+    }
+
+    private void getMyCheckList(long checkListInventoryId) {
+        checkListViewAdapter = new CheckListViewAdapter(MainActivity.this);
+
+        SQLiteDatabase sqLiteDatabase = myCheckListDataBase.getReadableDatabase();
+        Cursor cursor = sqLiteDatabase.rawQuery("SELECT * FROM checklist WHERE checklistinventory_id = ?", new String[] {Long.toString(checkListInventoryId)});
+
+        if (cursor.getCount() != 0) {
+            cursor.moveToFirst();
+            do {
+                checkListViewAdapter.addItem(cursor.getInt(0), cursor.getInt(1), cursor.getString(2), cursor.getInt(3));
+            } while (cursor.moveToNext());
+
+            cursor.close();
+        }
+        sqLiteDatabase.close();
+
+        myCheckListView.setAdapter(checkListViewAdapter);
     }
 }
