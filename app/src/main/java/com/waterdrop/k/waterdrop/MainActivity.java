@@ -83,8 +83,8 @@ public class MainActivity extends Activity {
                     mainViewFlipper.showPrevious();
                     pageTabFlag = true;
                 }
-                checkListPageTab.setBackgroundColor(Color.parseColor("#DDDDDD"));
-                chatBotPageTab.setBackgroundColor(Color.parseColor("#CCCCCC"));
+                checkListPageTab.setBackgroundColor(Color.parseColor("#3F51B5"));
+                chatBotPageTab.setBackgroundColor(Color.parseColor("#303F9F"));
             }
         });
 
@@ -98,8 +98,8 @@ public class MainActivity extends Activity {
                     mainViewFlipper.showNext();
                     pageTabFlag = true;
                 }
-                chatBotPageTab.setBackgroundColor(Color.parseColor("#DDDDDD"));
-                checkListPageTab.setBackgroundColor(Color.parseColor("#CCCCCC"));
+                chatBotPageTab.setBackgroundColor(Color.parseColor("#3F51B5"));
+                checkListPageTab.setBackgroundColor(Color.parseColor("#303F9F"));
             }
         });
 
