@@ -29,18 +29,23 @@ public class CheckList extends SQLiteOpenHelper {
     @Override
     public void onCreate(SQLiteDatabase database) {
         // 테이블 생성
-        database.execSQL("CREATE TABLE checklist (_id INTEGER PRIMARY KEY AUTOINCREMENT, index INTEGER, todo TEXT);");
+        database.execSQL("CREATE TABLE checklistinventory (_id INTEGER PRIMARY KEY AUTOINCREMENT, name TEXT);");
+        database.execSQL("CREATE TABLE checklist (_id INTEGER PRIMARY KEY AUTOINCREMENT, checklistinventory_id INTEGER, todo TEXT, ischecked INTEGER);");
 
-        database.execSQL("INSERT INTO checklist VALUES(null, 1, '낙뢰 시 낮은 지역 또는 건물안 등 안전지대로 대피하세요.');");
-        database.execSQL("INSERT INTO checklist VALUES(null, 1, '노약자나 어린이는 외출을 자제하세요.');");
-        database.execSQL("INSERT INTO checklist VALUES(null, 1, '라디오, TV 등에 의한 기상예보 및 특보상황 청취하세요.');");
-        database.execSQL("INSERT INTO checklist VALUES(null, 1, '아파트등 고층건물 옥상, 지하실 및 하수도 맨홀 등 접근 금지하세요.');");
-        database.execSQL("INSERT INTO checklist VALUES(null, 1, '농촌ㆍ산간지역의 제반시설 보호 및 보강하세요.');");
-        database.execSQL("INSERT INTO checklist VALUES(null, 1, '정전대비 비상대처준비 및 비상시 연락방법, 교통이용수단을 확인하세요.');");
+        database.execSQL("INSERT INTO checklistinventory VALUES(null, '일반');");
+        database.execSQL("INSERT INTO checklistinventory VALUES(null, '농촌');");
+
+        database.execSQL("INSERT INTO checklist VALUES(null, 1, '낙뢰 시 낮은 지역 또는 건물안 등 안전지대로 대피하세요.', 0);");
+        database.execSQL("INSERT INTO checklist VALUES(null, 1, '노약자나 어린이는 외출을 자제하세요.', 0);");
+        database.execSQL("INSERT INTO checklist VALUES(null, 1, '라디오, TV 등에 의한 기상예보 및 특보상황 청취하세요.', 0);");
+        database.execSQL("INSERT INTO checklist VALUES(null, 1, '아파트등 고층건물 옥상, 지하실 및 하수도 맨홀 등 접근 금지하세요.', 0);");
+        database.execSQL("INSERT INTO checklist VALUES(null, 2, '농촌ㆍ산간지역의 제반시설 보호 및 보강하세요.', 0);");
+        database.execSQL("INSERT INTO checklist VALUES(null, 2, '정전대비 비상대처준비 및 비상시 연락방법, 교통이용수단을 확인하세요.', 0);");
     }
 
     @Override
     public void onUpgrade(SQLiteDatabase database, int oldVersion, int newVersion) {
+        database.execSQL("DROP TABLE IF EXISTS checklistinventory");
         database.execSQL("DROP TABLE IF EXISTS checklist");
         onCreate(database);
     }
