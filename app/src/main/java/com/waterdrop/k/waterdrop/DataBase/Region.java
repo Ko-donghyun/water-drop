@@ -3510,13 +3510,11 @@ public class Region extends SQLiteOpenHelper {
         database.execSQL("INSERT INTO region VALUES(null, '충청북도', '충주시', '지현동', 0);");
         database.execSQL("INSERT INTO region VALUES(null, '충청북도', '충주시', '칠금·금릉동', 0);");
         database.execSQL("INSERT INTO region VALUES(null, '충청북도', '충주시', '호암·직동', 0);");
-
-
     }
 
     @Override
     public void onUpgrade(SQLiteDatabase database, int oldVersion, int newVersion) {
-        database.execSQL("DROP TABLE IF EXISTS todo");
+        database.execSQL("DROP TABLE IF EXISTS region");
         onCreate(database);
     }
 }

@@ -24,7 +24,7 @@ public class CheckList extends SQLiteOpenHelper {
 
     @Override
     public void onUpgrade(SQLiteDatabase database, int oldVersion, int newVersion) {
-        database.execSQL("DROP TABLE IF EXISTS todo");
+        database.execSQL("DROP TABLE IF EXISTS checklist");
         onCreate(database);
     }
 }
