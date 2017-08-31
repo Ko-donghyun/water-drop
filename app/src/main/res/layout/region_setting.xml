@@ -10,4 +10,18 @@
         android:layout_height="wrap_content"
         android:text="지역 수정 뷰"/>
 
+    <ListView
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+        android:id="@+id/my_region_list">
+
+    </ListView>
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="지역 추가"
+        android:id="@+id/my_region_add_button"
+        />
+
 </LinearLayout>
