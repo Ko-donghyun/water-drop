@@ -12,7 +12,10 @@ public class MyRegion extends SQLiteOpenHelper {
     @Override
     public void onCreate(SQLiteDatabase database) {
         // 테이블 생성
-        database.execSQL("CREATE TABLE myregion (_id INTEGER PRIMARY KEY AUTOINCREMENT, region_id INTEGER);");
+        database.execSQL("CREATE TABLE myregion (_id INTEGER PRIMARY KEY AUTOINCREMENT, city1 TEXT, city2 TEXT, city3 TEXT);");
+
+        database.execSQL("INSERT INTO myregion VALUES(null, '제주특별자치도', '서귀포시', '남원읍');");
+        database.execSQL("INSERT INTO myregion VALUES(null, '부산광역시', '금정구', '장전3동');");
     }
 
     @Override
