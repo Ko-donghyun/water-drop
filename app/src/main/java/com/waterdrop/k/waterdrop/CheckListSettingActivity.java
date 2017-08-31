@@ -16,7 +16,7 @@ import android.widget.Toast;
 
 import com.waterdrop.k.waterdrop.DataBase.CheckList;
 import com.waterdrop.k.waterdrop.Dialog.CheckListAddDialog;
-import com.waterdrop.k.waterdrop.ListViewAdapter.CheckListViewAdapter;
+import com.waterdrop.k.waterdrop.ListViewAdapter.CheckListViewAdapter2;
 import com.waterdrop.k.waterdrop.SpinnerAdapter.MyCheckListSpinnerAdapter;
 
 public class CheckListSettingActivity extends Activity {
@@ -32,7 +32,7 @@ public class CheckListSettingActivity extends Activity {
     final String myCheckListDataBaseName = "mychecklist.db";
     final int myCheckListDataBaseVersion = 1;
 
-    CheckListViewAdapter checkListViewAdapter;
+    CheckListViewAdapter2 checkListViewAdapter;
     ListView myCheckListView;
 
     Spinner myCheckListSpinner;
@@ -49,14 +49,10 @@ public class CheckListSettingActivity extends Activity {
         lastSelectedCheckListInventoryId = lastSelectedCheckListInventoryIdPreference.getLong("lastSelectedCheckListInventoryId", 1);
 
 
-//        lastGetInTimeEditor = lastGetInTimePreference.edit();
-//        lastGetInTimeEditor.putLong("lastGetInTime", currentTime);
-//        lastGetInTimeEditor.apply();
-
         checkListItemAddButton = (TextView) findViewById(R.id.check_list_item_add_button);
         myCheckListDataBase = new CheckList(this, myCheckListDataBaseName, null, myCheckListDataBaseVersion);
 
-        checkListViewAdapter = new CheckListViewAdapter();
+        checkListViewAdapter = new CheckListViewAdapter2();
         myCheckListSpinnerAdapter = new MyCheckListSpinnerAdapter();
 
         myCheckListView = (ListView) findViewById(R.id.my_check_list_view);
@@ -86,9 +82,6 @@ public class CheckListSettingActivity extends Activity {
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
                 lastSelectedCheckListInventoryId = myCheckListSpinnerAdapter.getItem(i).getId();
 
-                lastSelectedCheckListInventoryIdEditor = lastSelectedCheckListInventoryIdPreference.edit();
-                lastSelectedCheckListInventoryIdEditor.putLong("lastSelectedCheckListInventoryId", lastSelectedCheckListInventoryId);
-                lastSelectedCheckListInventoryIdEditor.apply();
                 getMyCheckList(lastSelectedCheckListInventoryId);
                 Toast.makeText(CheckListSettingActivity.this, Long.toString(lastSelectedCheckListInventoryId), Toast.LENGTH_SHORT).show();
 
@@ -124,7 +117,7 @@ public class CheckListSettingActivity extends Activity {
     }
 
     private void getMyCheckList(long checkListInventoryId) {
-        checkListViewAdapter = new CheckListViewAdapter();
+        checkListViewAdapter = new CheckListViewAdapter2();
 
         SQLiteDatabase sqLiteDatabase = myCheckListDataBase.getReadableDatabase();
         Cursor cursor = sqLiteDatabase.rawQuery("SELECT * FROM checklist WHERE checklistinventory_id = ?", new String[] {Long.toString(checkListInventoryId)});
