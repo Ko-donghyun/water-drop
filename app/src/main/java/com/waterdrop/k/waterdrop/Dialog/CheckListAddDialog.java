@@ -1,4 +1,4 @@
-package com.waterdrop.k.waterdrop;
+package com.waterdrop.k.waterdrop.Dialog;
 
 import android.app.Dialog;
 import android.content.Context;
@@ -13,7 +13,9 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-public class AddDialog extends Dialog {
+import com.waterdrop.k.waterdrop.R;
+
+public class CheckListAddDialog extends Dialog {
 
 //    private View.OnClickListener settingThemeClickListener;
     private View.OnClickListener okayClickListener;
@@ -53,7 +55,7 @@ public class AddDialog extends Dialog {
 //        pushSwitch.setOnCheckedChangeListener(settingAlarmClickListener);
     }
 
-    public AddDialog(Context context, View.OnClickListener okayClickListener) {
+    public CheckListAddDialog(Context context, View.OnClickListener okayClickListener) {
         super(context, android.R.style.Theme_Translucent_NoTitleBar);
         this.context = context;
 //        this.editableTime = editableTime;
