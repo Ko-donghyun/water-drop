@@ -7,10 +7,12 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
 
+import com.waterdrop.k.waterdrop.Dialog.CheckListAddDialog;
+
 public class CheckListSettingActivity extends Activity {
 
     TextView checkListItemAddButton;
-    AddDialog addDialog;
+    CheckListAddDialog checkListAddDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -26,8 +28,8 @@ public class CheckListSettingActivity extends Activity {
             @Override
             public void onClick(View view) {
 
-                addDialog = new AddDialog(CheckListSettingActivity.this, okayClickListener);
-                addDialog.show();
+                checkListAddDialog = new CheckListAddDialog(CheckListSettingActivity.this, okayClickListener);
+                checkListAddDialog.show();
             }
         });
     }
@@ -35,7 +37,7 @@ public class CheckListSettingActivity extends Activity {
 
     private View.OnClickListener okayClickListener = new View.OnClickListener() {
         public void onClick(View v) {
-            addDialog.dismiss();
+            checkListAddDialog.dismiss();
         }
     };
 }
