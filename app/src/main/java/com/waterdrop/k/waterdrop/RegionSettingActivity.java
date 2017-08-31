@@ -127,6 +127,7 @@ public class RegionSettingActivity extends Activity {
     }
 
     private void setCity2ListViewAdapter() {
+        city2ListViewAdapter = new TextListViewAdapter();
         SQLiteDatabase sqLiteDatabase = regionDataBase.getReadableDatabase();
         Cursor cursor = sqLiteDatabase.rawQuery("SELECT DISTINCT city2 FROM region WHERE city1 = ?", new String [] {city1});
 
@@ -144,6 +145,7 @@ public class RegionSettingActivity extends Activity {
     }
 
     private void setCity3ListViewAdapter() {
+        city3ListViewAdapter = new TextListViewAdapter();
         SQLiteDatabase sqLiteDatabase = regionDataBase.getReadableDatabase();
         Cursor cursor = sqLiteDatabase.rawQuery("SELECT DISTINCT _id, city3 FROM region WHERE city1 = ? AND city2 = ?", new String [] {city1, city2});
 
