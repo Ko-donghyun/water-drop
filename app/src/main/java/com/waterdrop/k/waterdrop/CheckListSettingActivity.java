@@ -251,7 +251,6 @@ public class CheckListSettingActivity extends Activity {
                                     JSONObject jsonObject = new JSONObject(jsonArray.get(i).toString());
 
                                     String behaviorContent = jsonObject.getString("behavior_content");
-                                    Log.d("jsonArra", behaviorContent);
                                     serverCheckListViewAdapter.addItem(i, 0, behaviorContent, 0);
                                 }
 
@@ -313,8 +312,6 @@ public class CheckListSettingActivity extends Activity {
                         } else {
 
                         }
-
-                        Log.d("성공", "성공");
                     }
                 });
             }

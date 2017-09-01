@@ -18,11 +18,11 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:background="#ffffff"
             android:gravity="center"
             android:padding="5dp"
             android:paddingLeft="10dp"
             android:paddingRight="10dp"
-            android:background="#ffffff"
             android:text="행동요령 추가"
             android:textColor="#47baa1"
             android:textSize="24dp" />
@@ -90,7 +90,7 @@
             android:textColor="#000000"
             android:textSize="16dp">
 
-        <requestFocus />
+            <requestFocus />
         </EditText>
 
         <LinearLayout
@@ -105,22 +105,22 @@
                 android:id="@+id/dialog_cancel"
                 android:layout_width="0dp"
                 android:layout_height="45dp"
-                android:background="@drawable/header"
                 android:layout_marginRight="1dp"
-                android:textColor="#ffffff"
                 android:layout_weight="1"
+                android:background="@drawable/header"
                 android:text="닫기"
+                android:textColor="#ffffff"
                 android:textSize="16dp" />
 
             <Button
                 android:id="@+id/dialog_okay"
                 android:layout_width="0dp"
-                android:background="@drawable/header"
-                android:layout_marginLeft="1dp"
-                android:textColor="#ffffff"
                 android:layout_height="45dp"
+                android:layout_marginLeft="1dp"
                 android:layout_weight="1"
+                android:background="@drawable/header"
                 android:text="추가"
+                android:textColor="#ffffff"
                 android:textSize="16dp" />
 
         </LinearLayout>
