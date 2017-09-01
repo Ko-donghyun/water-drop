@@ -1,15 +1,48 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
+<RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:gravity="center">
 
-    <TextView
+    <ListView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center"
-        android:text="chat_bot"/>
+        android:layout_height="match_parent"
+        android:layout_marginBottom="51dp"
+        android:id="@+id/chat_bot_list_view"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true">
+    </ListView>
 
-</LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:orientation="horizontal"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true">
+
+        <EditText
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="50dp"
+            android:background="#FFFFFF"
+            android:paddingLeft="15dp"
+            android:gravity="left|center_vertical"
+            android:layout_gravity="center"
+            android:textSize="16dp"
+            android:hint="질문을 입력하세요(ex 주변 대피 지역)"
+            android:id="@+id/question"/>
+
+        <Button
+            android:id="@+id/send_button"
+            android:layout_width="100dp"
+            android:layout_height="50dp"
+            android:gravity="center"
+            android:background="#ffffff"
+            android:text="전송" />
+
+    </LinearLayout>
+</RelativeLayout>
