@@ -1,18 +1,24 @@
 package com.waterdrop.k.waterdrop;
 
+import android.Manifest;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Color;
 import android.location.Address;
 import android.location.Geocoder;
+import android.location.Location;
+import android.location.LocationListener;
+import android.location.LocationManager;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.util.Log;
 import android.view.View;
@@ -31,10 +37,12 @@ import android.widget.Toast;
 import android.widget.ViewFlipper;
 
 import com.waterdrop.k.waterdrop.DataBase.CheckList;
+import com.waterdrop.k.waterdrop.DataBase.Region;
 import com.waterdrop.k.waterdrop.Dialog.CheckListAddDialog;
 import com.waterdrop.k.waterdrop.ListViewAdapter.ChatBotListViewAdapter;
 import com.waterdrop.k.waterdrop.ListViewAdapter.CheckListViewAdapter;
 import com.waterdrop.k.waterdrop.ListViewAdapter.CheckListViewAdapter3;
+import com.waterdrop.k.waterdrop.ListViewAdapter.TextListViewAdapter;
 import com.waterdrop.k.waterdrop.SpinnerAdapter.MyCheckListSpinnerAdapter;
 
 import org.json.JSONArray;
@@ -93,7 +101,14 @@ public class MainActivity extends Activity {
      * 챗봇 페이지
      */
 
-    public static SharedPreferences positionPreference;
+    Region regionDataBase;
+    final String regionDataBaseName = "region.db";
+    final int regionDataBaseVersion = 1;
+
+    public static SharedPreferences positionLongitudePreference;
+    public static SharedPreferences.Editor positionLongitudePreferenceEditor;
+    public static SharedPreferences positionLatitudePreference;
+    public static SharedPreferences.Editor positionLatitudePreferenceEditor;
 
     ListView chatBotListView;
     Button sendButton;
@@ -104,9 +119,10 @@ public class MainActivity extends Activity {
     String longitude;
     String latitude;
 
-    String si;
-    String gu;
-    String dong;
+    String address;
+    String city1;
+    String city2;
+    String city3;
 
     boolean sendable = true;
 
@@ -255,6 +271,8 @@ public class MainActivity extends Activity {
         /*
          * 챗봇 페이지
          */
+        regionDataBase = new Region(this, regionDataBaseName, null, regionDataBaseVersion);
+
         chatBotListViewAdapter = new ChatBotListViewAdapter();
         chatBotListView = (ListView) findViewById(R.id.chat_bot_list_view);
         chatBotListView.setAdapter(chatBotListViewAdapter);
@@ -274,14 +292,11 @@ public class MainActivity extends Activity {
                     chatBotListViewAdapter.addItem(0, questionEdit.getText().toString(), 0);
                     chatBotListViewAdapter.notifyDataSetChanged();
 
-                    positionPreference = getSharedPreferences("longitude", Activity.MODE_PRIVATE);
-                    longitude = positionPreference.getString("longitude", "126");
+                    positionLongitudePreference = getSharedPreferences("longitude", Activity.MODE_PRIVATE);
+                    longitude = positionLongitudePreference.getString("longitude", "126");
 
-                    positionPreference = getSharedPreferences("latitude", Activity.MODE_PRIVATE);
-                    latitude = positionPreference.getString("latitude", "37");
-
-                    Log.d("longitude", longitude);
-                    Log.d("latitude", latitude);
+                    positionLatitudePreference = getSharedPreferences("latitude", Activity.MODE_PRIVATE);
+                    latitude = positionLatitudePreference.getString("latitude", "37");
 
                     ok.get("api/chatbot?message=" + questionEdit.getText().toString() + "&longitude=" + longitude + "&latitude=" + latitude, new Callback() {
                         @Override
@@ -305,7 +320,6 @@ public class MainActivity extends Activity {
                         public void onResponse(Call call, Response response) throws IOException {
                             responseStr = response.body().string();
                             responseResult = response;
-                            Log.d("answer", responseStr);
 
                             mHandler.post(new Runnable() {
                                 @Override
@@ -359,18 +373,15 @@ public class MainActivity extends Activity {
     private void sendWelcome() {
         sendable = false;
 
-        positionPreference = getSharedPreferences("longitude", Activity.MODE_PRIVATE);
-        longitude = positionPreference.getString("longitude", "126");
+        positionLongitudePreference = getSharedPreferences("longitude", Activity.MODE_PRIVATE);
+        longitude = positionLongitudePreference.getString("longitude", "126.976930");
 
-        positionPreference = getSharedPreferences("latitude", Activity.MODE_PRIVATE);
-        latitude = positionPreference.getString("latitude", "37");
+        positionLatitudePreference = getSharedPreferences("latitude", Activity.MODE_PRIVATE);
+        latitude = positionLatitudePreference.getString("latitude", "37.574515");
 
         getLocation();
-        Log.d("longitude", longitude);
-        Log.d("latitude", si);
-        Log.d("latitude", gu);
-        Log.d("latitude", dong);
-        ok.get("api/chatbot/welcome&si=" + si + "&gu=" + gu + "&dong=" + dong, new Callback() {
+
+        ok.get("api/chatbot/welcome?si=" + city1 + "&gu=" + city2 + "&dong=" + city3, new Callback() {
             @Override
             public void onFailure(Call call, IOException e) {
                 sendable = true;
@@ -379,7 +390,7 @@ public class MainActivity extends Activity {
                     @Override
                     public void run() {
                         questionEdit.setText("");
-                        chatBotListViewAdapter.addItem(1, "서버 통신 실패했습니다.", 1);
+                        chatBotListViewAdapter.addItem(1, "현재 위치가 올바르지 않습니다.", 1);
                         chatBotListViewAdapter.notifyDataSetChanged();
                         chatBotListView.setAdapter(chatBotListViewAdapter);
                         chatBotListView.setSelection(chatBotListViewAdapter.getCount() - 1);
@@ -397,13 +408,9 @@ public class MainActivity extends Activity {
                     @Override
                     public void run() {
 
-                        Log.d("aaa" , responseStr);
                         if (responseResult.isSuccessful()) {
                             try {
-                                Log.d("aaa" , responseStr);
-                                JSONObject jsonObject = new JSONObject(responseStr);
-
-                                chatBotListViewAdapter.addItem(1, jsonObject.toString(), 1);
+                                chatBotListViewAdapter.addItem(1, responseStr, 1);
 
                                 chatBotListViewAdapter.notifyDataSetChanged();
                                 chatBotListView.setAdapter(chatBotListViewAdapter);
@@ -414,6 +421,12 @@ public class MainActivity extends Activity {
                             } catch (final Exception e) {
                                 System.out.print(e.toString());
                             }
+                        } else {
+                            questionEdit.setText("");
+                            chatBotListViewAdapter.addItem(1, "서버 통신 실패했습니다.", 1);
+                            chatBotListViewAdapter.notifyDataSetChanged();
+                            chatBotListView.setAdapter(chatBotListViewAdapter);
+                            chatBotListView.setSelection(chatBotListViewAdapter.getCount() - 1);
                         }
                     }
                 });
@@ -423,6 +436,7 @@ public class MainActivity extends Activity {
     }
 
     public void getLocation() {
+        getCurrentLocation();
         Geocoder geocoder;
         List<Address> addresses = null;
         geocoder = new Geocoder(this, Locale.getDefault());
@@ -430,13 +444,62 @@ public class MainActivity extends Activity {
 //        double longitude = 127.23;
         try {
             addresses = geocoder.getFromLocation(Double.parseDouble(latitude), Double.parseDouble(longitude), 1); // Here 1 represent max location result to returned, by documents it recommended 1 to 5
+//            addresses = geocoder.getFromLocation(latitude, longitude), 1); // Here 1 represent max location result to returned, by documents it recommended 1 to 5
         } catch (IOException e) {
             e.printStackTrace();
         }
 
-        si = addresses.get(0).getLocality().toString(); // If any additional address line present than only, check with max available address lines by getMaxAddressLineIndex()
-        gu = addresses.get(0).getSubLocality();
-        dong = addresses.get(0).getThoroughfare();
+//        p1 = new GeoPoint((int) (location.getLatitude() * 1E6),
+//                (int) (location.getLongitude() * 1E6));
+//
+
+        address = addresses.get(0).getAddressLine(0);
+        System.out.println(addresses);
+        city1 = addresses.get(0).getLocality();
+        city3 = addresses.get(0).getThoroughfare();
+
+        SQLiteDatabase sqLiteDatabase = regionDataBase.getReadableDatabase();
+        Cursor cursor = sqLiteDatabase.rawQuery("SELECT DISTINCT _id, city1, city2, city3 FROM region WHERE city1 = ? AND city3 = ?", new String [] {city1, city3});
+
+        if (cursor.getCount() != 0) {
+            cursor.moveToFirst();
+            do {
+                city2 = cursor.getString(2);
+            } while (cursor.moveToNext());
+
+            cursor.close();
+        }
+        sqLiteDatabase.close();
+
+//        Log.d("adsfd", addresses.get(0).getLocality());
+//        Log.d("adsfd", addresses.get(0).getUrl());
+//        Log.d("adsfd", addresses.get(0).ge);
+//        Log.d("adsfd", addresses.get(0).getAddressLine(2));
+    }
+
+    public void getCurrentLocation() {
+
+        LocationManager lm = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
+        lm.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, // 등록할 위치제공자
+                100, // 통지사이의 최소 시간간격 (miliSecond)
+                1, // 통지사이의 최소 변경거리 (m)
+                mLocationListener);
+
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            // TODO: Consider calling
+            //    ActivityCompat#requestPermissions
+            // here to request the missing permissions, and then overriding
+            //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
+            //                                          int[] grantResults)
+            // to handle the case where the user grants the permission. See the documentation
+            // for ActivityCompat#requestPermissions for more details.
+
+        } else {
+            lm.requestLocationUpdates(LocationManager.GPS_PROVIDER, // 등록할 위치제공자
+                    100, // 통지사이의 최소 시간간격 (miliSecond)
+                    1, // 통지사이의 최소 변경거리 (m)
+                    mLocationListener);
+        }
     }
 
     private void getMyCheckListSpinnerData() {
@@ -480,5 +543,48 @@ public class MainActivity extends Activity {
     private void showKeyboard(View view) {
         imm.showSoftInput(view, 0);
     }
+    private final LocationListener mLocationListener = new LocationListener() {
+        public void onLocationChanged(Location location) {
+            //여기서 위치값이 갱신되면 이벤트가 발생한다.
+            //값은 Location 형태로 리턴되며 좌표 출력 방법은 다음과 같다.
 
+//            Log.d("test", "onLocationChanged, location:" + location);
+            double longitude = location.getLongitude(); //경도
+            double latitude = location.getLatitude();   //위도
+//            double altitude = location.getAltitude();   //고도
+//            float accuracy = location.getAccuracy();    //정확도
+//            String provider = location.getProvider();   //위치제공자
+            //Gps 위치제공자에 의한 위치변화. 오차범위가 좁다.
+            //Network 위치제공자에 의한 위치변화
+            //Network 위치는 Gps에 비해 정확도가 많이 떨어진다.
+//            Log.d("longitude", Double.toString(longitude));
+//            Log.d("latitude", Double.toString(latitude));
+//            Log.d("provider", provider);
+//
+            positionLongitudePreference = getSharedPreferences("longitude", Activity.MODE_PRIVATE);
+            positionLongitudePreferenceEditor = positionLongitudePreference.edit();
+            positionLongitudePreferenceEditor.putString("longitude", Double.toString(longitude));
+            positionLongitudePreferenceEditor.apply();
+
+            positionLatitudePreference = getSharedPreferences("latitude", Activity.MODE_PRIVATE);
+            positionLatitudePreferenceEditor = positionLatitudePreference.edit();
+            positionLatitudePreferenceEditor.putString("latitude", Double.toString(latitude));
+            positionLatitudePreferenceEditor.apply();
+        }
+
+        public void onProviderDisabled(String provider) {
+            // Disabled시
+//            Log.d("test", "onProviderDisabled, provider:" + provider);
+        }
+
+        public void onProviderEnabled(String provider) {
+            // Enabled시
+//            Log.d("test", "onProviderEnabled, provider:" + provider);
+        }
+
+        public void onStatusChanged(String provider, int status, Bundle extras) {
+            // 변경시
+//            Log.d("test", "onStatusChanged, provider:" + provider + ", status:" + status + " ,Bundle:" + extras);
+        }
+    };
 }

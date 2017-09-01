@@ -1,6 +1,7 @@
 package com.waterdrop.k.waterdrop;
 
 import android.Manifest;
+import android.app.Activity;
 import android.app.Service;
 import android.content.Context;
 import android.content.Intent;
@@ -17,8 +18,10 @@ import android.util.Log;
 public class MyService extends Service {
     LocationManager lm;
 
-    public static SharedPreferences positionPreference;
-    public static SharedPreferences.Editor positionEditor;
+    public static SharedPreferences positionLongitudePreference;
+    public static SharedPreferences.Editor positionLongitudePreferenceEditor;
+    public static SharedPreferences positionLatitudePreference;
+    public static SharedPreferences.Editor positionLatitudePreferenceEditor;
 
     @Override
     public IBinder onBind(Intent intent) {
@@ -32,14 +35,14 @@ public class MyService extends Service {
         super.onCreate();
         // 서비스에서 가장 먼저 호출됨(최초에 한번만)
         lm = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
-        Log.d("test", "서비스의 onCreate");
+//        Log.d("test", "서비스의 onCreate");
     }
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
         // 서비스가 호출될 때마다 실행
-        Log.d("test", "서비스의 onStartCommand");
+//        Log.d("test", "서비스의 onStartCommand");
         lm.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, // 등록할 위치제공자
-                1000, // 통지사이의 최소 시간간격 (miliSecond)
+                100, // 통지사이의 최소 시간간격 (miliSecond)
                 1, // 통지사이의 최소 변경거리 (m)
                 mLocationListener);
 
@@ -54,7 +57,7 @@ public class MyService extends Service {
 
         } else {
             lm.requestLocationUpdates(LocationManager.GPS_PROVIDER, // 등록할 위치제공자
-                    1000, // 통지사이의 최소 시간간격 (miliSecond)
+                    100, // 통지사이의 최소 시간간격 (miliSecond)
                     1, // 통지사이의 최소 변경거리 (m)
                     mLocationListener);
         }
@@ -66,7 +69,8 @@ public class MyService extends Service {
         super.onDestroy();
         // 서비스가 종료될 때 실행
         lm.removeUpdates(mLocationListener);
-        Log.d("test", "서비스의 onDestroy");
+//        positionPreference = getSharedPreferences("longitude", Activity.MODE_PRIVATE);
+//        Log.d("test", "서비스의 onDestroy");
     }
 
 
@@ -75,7 +79,7 @@ public class MyService extends Service {
             //여기서 위치값이 갱신되면 이벤트가 발생한다.
             //값은 Location 형태로 리턴되며 좌표 출력 방법은 다음과 같다.
 
-            Log.d("test", "onLocationChanged, location:" + location);
+//            Log.d("test", "onLocationChanged, location:" + location);
             double longitude = location.getLongitude(); //경도
             double latitude = location.getLatitude();   //위도
 //            double altitude = location.getAltitude();   //고도
@@ -88,28 +92,30 @@ public class MyService extends Service {
 //            Log.d("latitude", Double.toString(latitude));
 //            Log.d("provider", provider);
 //
-            positionEditor = positionPreference.edit();
-            positionEditor.putString("longitude", Double.toString(longitude));
-            positionEditor.apply();
+            positionLongitudePreference = getSharedPreferences("longitude", Activity.MODE_PRIVATE);
+            positionLongitudePreferenceEditor = positionLongitudePreference.edit();
+            positionLongitudePreferenceEditor.putString("longitude", Double.toString(longitude));
+            positionLongitudePreferenceEditor.apply();
 
-            positionEditor = positionPreference.edit();
-            positionEditor.putString("latitude", Double.toString(latitude));
-            positionEditor.apply();
+            positionLatitudePreference = getSharedPreferences("latitude", Activity.MODE_PRIVATE);
+            positionLatitudePreferenceEditor = positionLatitudePreference.edit();
+            positionLatitudePreferenceEditor.putString("latitude", Double.toString(latitude));
+            positionLatitudePreferenceEditor.apply();
         }
 
         public void onProviderDisabled(String provider) {
             // Disabled시
-            Log.d("test", "onProviderDisabled, provider:" + provider);
+//            Log.d("test", "onProviderDisabled, provider:" + provider);
         }
 
         public void onProviderEnabled(String provider) {
             // Enabled시
-            Log.d("test", "onProviderEnabled, provider:" + provider);
+//            Log.d("test", "onProviderEnabled, provider:" + provider);
         }
 
         public void onStatusChanged(String provider, int status, Bundle extras) {
             // 변경시
-            Log.d("test", "onStatusChanged, provider:" + provider + ", status:" + status + " ,Bundle:" + extras);
+//            Log.d("test", "onStatusChanged, provider:" + provider + ", status:" + status + " ,Bundle:" + extras);
         }
     };
 }

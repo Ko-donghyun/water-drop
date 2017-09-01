@@ -29,8 +29,10 @@ public class LoadingActivity extends Activity {
     public static SharedPreferences firstTimePreference;
     public static SharedPreferences.Editor firstTimeEditor;
 
-    public static SharedPreferences positionPreference;
-    public static SharedPreferences.Editor positionEditor;
+    public static SharedPreferences positionLongitudePreference;
+    public static SharedPreferences.Editor positionLongitudePreferenceEditor;
+    public static SharedPreferences positionLatitudePreference;
+    public static SharedPreferences.Editor positionLatitudePreferenceEditor;
     int firstTime;
 
     String longitude;
@@ -48,11 +50,11 @@ public class LoadingActivity extends Activity {
         firstTimePreference = getSharedPreferences("firstTime", Activity.MODE_PRIVATE);
         firstTime = firstTimePreference.getInt("firstTime", 0);
 
-        positionPreference = getSharedPreferences("longitude", Activity.MODE_PRIVATE);
-        longitude = positionPreference.getString("longitude", "126");
+        positionLongitudePreference = getSharedPreferences("longitude", Activity.MODE_PRIVATE);
+        longitude = positionLongitudePreference.getString("longitude", "126.976930");
 
-        positionPreference = getSharedPreferences("latitude", Activity.MODE_PRIVATE);
-        latitude = positionPreference.getString("latitude", "37");
+        positionLatitudePreference = getSharedPreferences("latitude", Activity.MODE_PRIVATE);
+        latitude = positionLatitudePreference.getString("latitude", "37.574515");
 
         if (firstTime == 0) {
             // 토큰 값 받기
