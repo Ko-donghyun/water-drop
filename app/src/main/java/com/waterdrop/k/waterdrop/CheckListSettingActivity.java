@@ -177,6 +177,8 @@ public class CheckListSettingActivity extends Activity {
                 myCheckListViewInventoryAdapter.addItem(id, checkListInventoryEditDialog.getInventoryEditText());
                 checkListInventoryEditDialog.updateInventoryListViewAdapter(myCheckListViewInventoryAdapter);
                 myCheckListSpinnerAdapter.notifyDataSetChanged();
+                checkListInventoryEditDialog.setEmptyText();
+                checkListInventoryEditDialog.dismiss();
             }
         }
     };

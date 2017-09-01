@@ -71,4 +71,7 @@ public class CheckListInventoryEditDialog extends Dialog {
         this.inventoryListViewAdapter = inventoryListViewAdapter;
         inventoryListView.setAdapter(inventoryListViewAdapter);
     }
+    public void setEmptyText() {
+        inventoryEditText.setText("");
+    }
 }
