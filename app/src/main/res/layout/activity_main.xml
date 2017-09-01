@@ -118,7 +118,7 @@
             android:background="@drawable/emerald">
             <ImageView
                 android:layout_width="match_parent"
-                android:layout_height="100dp"
+                android:layout_height="150dp"
                 android:src="@drawable/verticallogo"/>
         </LinearLayout>
 
