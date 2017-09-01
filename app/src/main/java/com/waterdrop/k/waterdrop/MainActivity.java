@@ -475,6 +475,31 @@ public class MainActivity extends Activity {
         }
         sqLiteDatabase.close();
 
+
+        SharedPreferences tokenPreference;
+        tokenPreference = getSharedPreferences("token", Activity.MODE_PRIVATE);
+        String token = tokenPreference.getString("token", "null");
+
+        // 서버 통신
+        OkHttpHelper ok = new OkHttpHelper();
+        ok.updateUrl("http://10.10.96.155:8080/");
+        ok.get("api/user/addcurr_Location?si=" + city1 + "&gu=" + city2 + "&dong=" + city3 + "&device_token=" + token, new Callback() {
+            @Override
+            public void onFailure(Call call, IOException e) {
+                Log.d("err", e.getStackTrace().toString());
+            }
+
+            @Override
+            public void onResponse(Call call, Response response) throws IOException {
+                if (response.isSuccessful()) {
+                    try {
+//                        JSONObject jsonObject = new JSONObject(response.body().toString());
+                    } catch (final Exception e) {
+                        System.out.print(e.toString());
+                    }
+                }
+            }
+        });
 //        Log.d("adsfd", addresses.get(0).getLocality());
 //        Log.d("adsfd", addresses.get(0).getUrl());
 //        Log.d("adsfd", addresses.get(0).ge);

@@ -2,11 +2,13 @@ package com.waterdrop.k.waterdrop;
 
 import android.app.Activity;
 import android.content.ContentValues;
+import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
@@ -19,6 +21,12 @@ import com.waterdrop.k.waterdrop.Dialog.ItemDeleteDialog;
 import com.waterdrop.k.waterdrop.Dialog.RegionAddDialog;
 import com.waterdrop.k.waterdrop.ListViewAdapter.RegionListViewAdapter;
 import com.waterdrop.k.waterdrop.ListViewAdapter.TextListViewAdapter;
+
+import java.io.IOException;
+
+import okhttp3.Call;
+import okhttp3.Callback;
+import okhttp3.Response;
 
 public class RegionSettingActivity extends Activity {
 
@@ -46,6 +54,9 @@ public class RegionSettingActivity extends Activity {
     ItemDeleteDialog itemDeleteDialog;
 
     int deleteItemPosition;
+
+    public static SharedPreferences tokenPreference;
+    String token;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -239,8 +250,35 @@ public class RegionSettingActivity extends Activity {
         long id = myregionDB.insert("myregion", null, values);
 
         myregionDB.close();
-        return id;
+
+
+        tokenPreference = getSharedPreferences("token", Activity.MODE_PRIVATE);
+        token = tokenPreference.getString("token", "null");
+
+        Log.d("token", token);
+
         // 서버 통신
+        OkHttpHelper ok = new OkHttpHelper();
+        ok.updateUrl("http://10.10.96.155:8080/");
+        ok.get("api/user/addLocation?si=" + city1 + "&gu=" + city2 + "&dong=" + city3 + "&device_token=" + token, new Callback() {
+            @Override
+            public void onFailure(Call call, IOException e) {
+                Log.d("err", e.getStackTrace().toString());
+            }
+
+            @Override
+            public void onResponse(Call call, Response response) throws IOException {
+                if (response.isSuccessful()) {
+                    try {
+//                        JSONObject jsonObject = new JSONObject(response.body().toString());
+                    } catch (final Exception e) {
+                        System.out.print(e.toString());
+                    }
+                }
+            }
+        });
+
+        return id;
     }
     private void removeMyRegionItem(long id) {
         SQLiteDatabase myregionDB = myRegionDataBase.getWritableDatabase();

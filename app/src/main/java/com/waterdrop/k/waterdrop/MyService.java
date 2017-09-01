@@ -7,6 +7,10 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
+import android.location.Address;
+import android.location.Geocoder;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
@@ -14,6 +18,16 @@ import android.os.Bundle;
 import android.os.IBinder;
 import android.support.v4.app.ActivityCompat;
 import android.util.Log;
+
+import com.waterdrop.k.waterdrop.DataBase.Region;
+
+import java.io.IOException;
+import java.util.List;
+import java.util.Locale;
+
+import okhttp3.Call;
+import okhttp3.Callback;
+import okhttp3.Response;
 
 public class MyService extends Service {
     LocationManager lm;
@@ -42,7 +56,8 @@ public class MyService extends Service {
         // 서비스가 호출될 때마다 실행
 //        Log.d("test", "서비스의 onStartCommand");
         lm.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, // 등록할 위치제공자
-                100, // 통지사이의 최소 시간간격 (miliSecond)
+                3600000, // 통지사이의 최소 시간간격 (miliSecond)
+//                10000, // 통지사이의 최소 시간간격 (miliSecond), // 통지사이의 최소 시간간격 (miliSecond)
                 1, // 통지사이의 최소 변경거리 (m)
                 mLocationListener);
 
@@ -57,7 +72,8 @@ public class MyService extends Service {
 
         } else {
             lm.requestLocationUpdates(LocationManager.GPS_PROVIDER, // 등록할 위치제공자
-                    100, // 통지사이의 최소 시간간격 (miliSecond)
+                    3600000, // 통지사이의 최소 시간간격 (miliSecond)
+//                    10000, // 통지사이의 최소 시간간격 (miliSecond)
                     1, // 통지사이의 최소 변경거리 (m)
                     mLocationListener);
         }
@@ -101,6 +117,72 @@ public class MyService extends Service {
             positionLatitudePreferenceEditor = positionLatitudePreference.edit();
             positionLatitudePreferenceEditor.putString("latitude", Double.toString(latitude));
             positionLatitudePreferenceEditor.apply();
+
+
+            SharedPreferences tokenPreference;
+            tokenPreference = getSharedPreferences("token", Activity.MODE_PRIVATE);
+            String token = tokenPreference.getString("token", "null");
+
+            Log.d("token", token);
+
+            Geocoder geocoder;
+            List<Address> addresses = null;
+            geocoder = new Geocoder(getApplicationContext(), Locale.getDefault());
+
+            try {
+                addresses = geocoder.getFromLocation(latitude, longitude, 1); // Here 1 represent max location result to returned, by documents it recommended 1 to 5
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
+            String city1 = addresses.get(0).getLocality();
+            String city2 = "";
+            String city3 = addresses.get(0).getThoroughfare();
+
+            Log.d("city1", city1);
+            Log.d("city3", city3);
+
+            Region regionDataBase;
+            final String regionDataBaseName = "region.db";
+            final int regionDataBaseVersion = 1;
+
+            regionDataBase = new Region(getApplicationContext(), regionDataBaseName, null, regionDataBaseVersion);
+
+            SQLiteDatabase sqLiteDatabase = regionDataBase.getReadableDatabase();
+            Cursor cursor = sqLiteDatabase.rawQuery("SELECT DISTINCT _id, city1, city2, city3 FROM region WHERE city1 = ? AND city3 = ?", new String [] {city1, city3});
+
+            if (cursor.getCount() != 0) {
+                cursor.moveToFirst();
+                do {
+                    city2 = cursor.getString(2);
+                    Log.d("city2", city2);
+                } while (cursor.moveToNext());
+
+                cursor.close();
+            }
+            sqLiteDatabase.close();
+
+
+            // 서버 통신
+            OkHttpHelper ok = new OkHttpHelper();
+            ok.updateUrl("http://10.10.96.155:8080/");
+            ok.get("api/user/addcurr_Location?si=" + city1 + "&gu=" + city2 + "&dong=" + city3 + "&device_token=" + token, new Callback() {
+                @Override
+                public void onFailure(Call call, IOException e) {
+                    Log.d("err", e.getStackTrace().toString());
+                }
+
+                @Override
+                public void onResponse(Call call, Response response) throws IOException {
+                    if (response.isSuccessful()) {
+                        try {
+//                        JSONObject jsonObject = new JSONObject(response.body().toString());
+                        } catch (final Exception e) {
+                            System.out.print(e.toString());
+                        }
+                    }
+                }
+            });
         }
 
         public void onProviderDisabled(String provider) {
