@@ -14,7 +14,7 @@ public class OkHttpHelper {
 
     OkHttpClient client = new OkHttpClient();
     String RootUrl = "http://13.124.201.35:8080/";
-//    String RootUrl = "http://10.10.96.167:8080/";
+//    String RootUrl = "http://10.10.96.155:8080/";
 
     public Call post(String url, String json, Callback callback) {
         String fullUrl = RootUrl + url;
@@ -37,4 +37,9 @@ public class OkHttpHelper {
         call.enqueue(callback);
         return call;
     }
+
+    public void updateUrl(String rootUrl) {
+        RootUrl = rootUrl;
+    }
+
 }

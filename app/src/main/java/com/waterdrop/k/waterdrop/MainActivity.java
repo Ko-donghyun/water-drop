@@ -458,6 +458,9 @@ public class MainActivity extends Activity {
         city1 = addresses.get(0).getLocality();
         city3 = addresses.get(0).getThoroughfare();
 
+        Log.d("city1", city1);
+        Log.d("city3", city3);
+
         SQLiteDatabase sqLiteDatabase = regionDataBase.getReadableDatabase();
         Cursor cursor = sqLiteDatabase.rawQuery("SELECT DISTINCT _id, city1, city2, city3 FROM region WHERE city1 = ? AND city3 = ?", new String [] {city1, city3});
 
@@ -465,12 +468,38 @@ public class MainActivity extends Activity {
             cursor.moveToFirst();
             do {
                 city2 = cursor.getString(2);
+                Log.d("city2", city2);
             } while (cursor.moveToNext());
 
             cursor.close();
         }
         sqLiteDatabase.close();
 
+
+        SharedPreferences tokenPreference;
+        tokenPreference = getSharedPreferences("token", Activity.MODE_PRIVATE);
+        String token = tokenPreference.getString("token", "null");
+
+        // 서버 통신
+        OkHttpHelper ok = new OkHttpHelper();
+        ok.updateUrl("http://10.10.96.155:8080/");
+        ok.get("api/user/addcurr_Location?si=" + city1 + "&gu=" + city2 + "&dong=" + city3 + "&device_token=" + token, new Callback() {
+            @Override
+            public void onFailure(Call call, IOException e) {
+                Log.d("err", e.getStackTrace().toString());
+            }
+
+            @Override
+            public void onResponse(Call call, Response response) throws IOException {
+                if (response.isSuccessful()) {
+                    try {
+//                        JSONObject jsonObject = new JSONObject(response.body().toString());
+                    } catch (final Exception e) {
+                        System.out.print(e.toString());
+                    }
+                }
+            }
+        });
 //        Log.d("adsfd", addresses.get(0).getLocality());
 //        Log.d("adsfd", addresses.get(0).getUrl());
 //        Log.d("adsfd", addresses.get(0).ge);
