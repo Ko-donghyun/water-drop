@@ -13,18 +13,12 @@ import com.waterdrop.k.waterdrop.R;
 
 import java.util.ArrayList;
 
-public class CheckListViewAdapter2 extends BaseAdapter {
+public class CheckListViewAdapter3 extends BaseAdapter {
     // Adapter에 추가된 데이터를 저장하기 위한 ArrayList
     private ArrayList<CheckList> listViewItemList = new ArrayList<CheckList>();
 
-    boolean isLocal;
-
     // TextListViewAdapter 생성자
-    public CheckListViewAdapter2(boolean isLocal) {
-        this.isLocal = isLocal;
-
-
-    }
+    public CheckListViewAdapter3() {}
 
     // Adapter에 사용되는 데이터의 개수를 리턴 : 필수 구현
     @Override
@@ -40,29 +34,17 @@ public class CheckListViewAdapter2 extends BaseAdapter {
         // "todo_list_item" Layout을 inflate하여 convertView 참조 획득
         if (convertView == null) {
             LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-            convertView = inflater.inflate(R.layout.check_list_item, parent, false);
+            convertView = inflater.inflate(R.layout.server_check_list_item, parent, false);
         }
 
         // 화면에 표시될 View(Layout이 inflate된)으로부터 위젯에 대한 참조 획득
         TextView todo = (TextView) convertView.findViewById(R.id.text_item);
-        CheckBox checkBox = (CheckBox) convertView.findViewById(R.id.check_list_is_checked);
 
         // Data Set(listViewItemList)에서 position에 위치한 데이터 참조 획득
         CheckList listViewItem = listViewItemList.get(position);
 
         // 아이템 내 각 위젯에 데이터 반영
         todo.setText(listViewItem.getTodo());
-        if (isLocal) {
-            checkBox.setChecked(isLocal);
-        } else {
-            checkBox.setChecked(false);
-            if (listViewItem.getIsChecked() == 1) {
-                checkBox.setChecked(true);
-            } else {
-                checkBox.setChecked(false);
-            }
-        }
-
         return convertView;
     }
 

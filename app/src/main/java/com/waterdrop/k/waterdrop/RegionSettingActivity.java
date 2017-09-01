@@ -240,6 +240,7 @@ public class RegionSettingActivity extends Activity {
 
         myregionDB.close();
         return id;
+        // 서버 통신
     }
     private void removeMyRegionItem(long id) {
         SQLiteDatabase myregionDB = myRegionDataBase.getWritableDatabase();
