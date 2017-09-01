@@ -18,7 +18,7 @@
             android:layout_width="match_parent"
             android:layout_height="60dp"
             android:gravity="center_vertical"
-            android:background="#47baa1"
+            android:background="@drawable/border"
             android:orientation="horizontal">
 
             <ImageView
@@ -27,11 +27,18 @@
                 android:layout_height="50dp"
                 android:padding="5dp"
                 android:src="@drawable/hambutton" />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
             <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="50dp"
-                android:src="@drawable/logo_horizontal"
+                android:src="@drawable/logofinal"
                 android:layout_gravity="center"/>
+
+            </LinearLayout>
 
 
         </LinearLayout>
@@ -49,16 +56,20 @@
                 android:layout_height="50dp"
                 android:layout_weight="1"
                 android:background="#358675"
+                android:textColor="#ffffff"
+                android:textSize="18dp"
                 android:gravity="center"
                 android:padding="5dp"
-                android:text="chat_bot" />
+                android:text="챗봇" />
 
             <TextView
                 android:layout_width="0dp"
                 android:layout_weight="1"
                 android:layout_height="50dp"
                 android:padding="5dp"
-                android:text="check_list"
+                android:textSize="18dp"
+                android:text="체크리스트"
+                android:textColor="#ffffff"
                 android:id="@+id/check_list_page_tab"
                 android:gravity="center"
                 android:background="#47baa1"/>
@@ -108,7 +119,7 @@
             <ImageView
                 android:layout_width="match_parent"
                 android:layout_height="100dp"
-                android:src="@drawable/logo3"/>
+                android:src="@drawable/verticallogo"/>
         </LinearLayout>
 
                 <LinearLayout

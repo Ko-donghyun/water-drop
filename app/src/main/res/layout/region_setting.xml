@@ -7,7 +7,11 @@
 
     <TextView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="40dp"
+        android:textColor="#ffffff"
+        android:gravity="center"
+        android:textSize="18dp"
+        android:background="@drawable/title_background"
         android:text="나의 지역 리스트"/>
 
     <ListView
