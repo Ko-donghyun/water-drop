@@ -8,7 +8,7 @@
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="지역 수정 뷰"/>
+        android:text="나의 지역 리스트"/>
 
     <ListView
         android:layout_width="match_parent"

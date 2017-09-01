@@ -12,7 +12,7 @@
         android:layout_height="wrap_content"
         android:layout_marginLeft="30dp"
         android:layout_marginRight="30dp"
-        android:background="#f1f1f1"
+        android:background="@drawable/dialog_back"
         android:orientation="vertical">
 
         <TextView
@@ -22,8 +22,9 @@
             android:padding="5dp"
             android:paddingLeft="10dp"
             android:paddingRight="10dp"
+            android:background="#ffffff"
             android:text="행동요령 추가"
-            android:textColor="#000000"
+            android:textColor="#47baa1"
             android:textSize="24dp" />
 
         <LinearLayout
@@ -103,18 +104,24 @@
             <Button
                 android:id="@+id/dialog_cancel"
                 android:layout_width="0dp"
-                android:layout_height="wrap_content"
+                android:layout_height="45dp"
+                android:background="@drawable/header"
+                android:layout_marginRight="1dp"
+                android:textColor="#ffffff"
                 android:layout_weight="1"
                 android:text="닫기"
-                android:textSize="12dp" />
+                android:textSize="16dp" />
 
             <Button
                 android:id="@+id/dialog_okay"
                 android:layout_width="0dp"
-                android:layout_height="wrap_content"
+                android:background="@drawable/header"
+                android:layout_marginLeft="1dp"
+                android:textColor="#ffffff"
+                android:layout_height="45dp"
                 android:layout_weight="1"
                 android:text="추가"
-                android:textSize="12dp" />
+                android:textSize="16dp" />
 
         </LinearLayout>
 

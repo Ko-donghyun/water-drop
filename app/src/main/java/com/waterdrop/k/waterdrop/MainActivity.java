@@ -31,7 +31,6 @@ public class MainActivity extends Activity{
     ImageView sideDrawerButton;
     DrawerLayout sideDrawer;
     LinearLayout drawerLayout;
-    TextView temp;
 
 
     ViewFlipper mainViewFlipper;
@@ -45,7 +44,7 @@ public class MainActivity extends Activity{
     public static SharedPreferences.Editor lastSelectedCheckListInventoryIdEditor;
     Long lastSelectedCheckListInventoryId;
 
-    TextView checkListItemAddButton;
+    ImageView checkListItemAddButton;
 
     CheckList myCheckListDataBase;
     final String myCheckListDataBaseName = "mychecklist.db";
@@ -76,20 +75,6 @@ public class MainActivity extends Activity{
         regionSetting = (TextView) findViewById(R.id.region_setting);
 
         sideDrawerButton = (ImageView) findViewById(R.id.side_drawer_button);
-        temp = (TextView) findViewById(R.id.temp);
-
-        temp.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if (isInDanger) {
-                    temp.setText("침수 위험이 없습니다.");
-                    isInDanger = false;
-                } else {
-                    temp.setText("침수 위험이 있습니다.");
-                    isInDanger = true;
-                }
-            }
-        });
 
         sideDrawerButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -159,7 +144,7 @@ public class MainActivity extends Activity{
         lastSelectedCheckListInventoryId = lastSelectedCheckListInventoryIdPreference.getLong("lastSelectedCheckListInventoryId", 1);
 
 
-        checkListItemAddButton = (TextView) findViewById(R.id.check_list_item_add_button);
+        checkListItemAddButton = (ImageView) findViewById(R.id.check_list_item_add_button);
         myCheckListDataBase = new CheckList(this, myCheckListDataBaseName, null, myCheckListDataBaseVersion);
 
         checkListViewAdapter = new CheckListViewAdapter(MainActivity.this);
