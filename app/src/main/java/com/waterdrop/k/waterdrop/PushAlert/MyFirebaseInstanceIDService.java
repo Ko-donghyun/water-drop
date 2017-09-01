@@ -49,7 +49,7 @@ public class MyFirebaseInstanceIDService extends FirebaseInstanceIdService {
         tokenEditor.putString("token", refreshedToken);
         tokenEditor.apply();
 
-        ok.updateUrl("http://10.10.96.155:8080/");
+        //ok.updateUrl("http://10.10.96.155:8080/");
         ok.get("api/user/saveToken?device_token=" + refreshedToken, new Callback() {
             @Override
             public void onFailure(Call call, IOException e) {
