@@ -19,6 +19,7 @@ public class CheckListAddDialog extends Dialog {
 
 //    private View.OnClickListener settingThemeClickListener;
     private View.OnClickListener okayClickListener;
+    private View.OnClickListener cancelClickListener;
 //    private View.OnClickListener settingMyTimeZoneClickListener;
 //    private View.OnClickListener settingListViewThemeClickListener;
 //    private CompoundButton.OnCheckedChangeListener settingAlarmClickListener;
@@ -44,18 +45,14 @@ public class CheckListAddDialog extends Dialog {
 //        LinearLayout settingTheme = (LinearLayout) findViewById(R.id.setting_theme);
 //        LinearLayout settingListViewTheme = (LinearLayout) findViewById(R.id.setting_layout_theme);
 //        LinearLayout settingMyTimeZone = (LinearLayout) findViewById(R.id.setting_my_time_zone);
-        Button okayButton = (Button) findViewById(R.id.okay_button);
-//        SwitchCompat pushSwitch = (SwitchCompat) findViewById(R.id.push_switch);
-//        pushSwitch.setChecked(alarm);
-//
-//        settingMyTimeZone.setOnClickListener(settingMyTimeZoneClickListener);
-//        settingTheme.setOnClickListener(settingThemeClickListener);
-//        settingListViewTheme.setOnClickListener(settingListViewThemeClickListener);
+        Button okayButton = (Button) findViewById(R.id.dialog_okay);
         okayButton.setOnClickListener(okayClickListener);
+        Button cancelButton = (Button) findViewById(R.id.dialog_cancel);
+        cancelButton.setOnClickListener(cancelClickListener);
 //        pushSwitch.setOnCheckedChangeListener(settingAlarmClickListener);
     }
 
-    public CheckListAddDialog(Context context, View.OnClickListener okayClickListener) {
+    public CheckListAddDialog(Context context, View.OnClickListener okayClickListener, View.OnClickListener cancelClickListener) {
         super(context, android.R.style.Theme_Translucent_NoTitleBar);
         this.context = context;
 //        this.editableTime = editableTime;
@@ -65,5 +62,6 @@ public class CheckListAddDialog extends Dialog {
 //        this.settingMyTimeZoneClickListener = settingMyTimeZoneClickListener;
 //        this.settingAlarmClickListener = settingAlarmClickListener;
         this.okayClickListener = okayClickListener;
+        this.cancelClickListener = cancelClickListener;
     }
 }
