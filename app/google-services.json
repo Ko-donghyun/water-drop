@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "1017455715216",
+    "firebase_url": "https://waterdrop-e971d.firebaseio.com",
+    "project_id": "waterdrop-e971d",
+    "storage_bucket": "waterdrop-e971d.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1017455715216:android:9301732749545f1e",
+        "android_client_info": {
+          "package_name": "com.waterdrop.k.waterdrop"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1017455715216-55tvn336pfn1umu0c0pbaf6f6n1q1mv1.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBs1B9MRZby3Lb1pb7g8oHijmS1FMra5JY"
+        },
+        {
+          "current_key": "AIzaSyBvEIqzkKcIWQs0CQmQaxYIgnPmBBxUC9M"
+        },
+        {
+          "current_key": "AIzaSyArdThdieoVtM_8cyW-L2fUkPPdsHDKZkA"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
