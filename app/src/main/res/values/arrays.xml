@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="behavior_location_geograph">
+        <item>공통</item>
+        <item>농촌산간</item>
+        <item>해안</item>
+    </string-array>
+    <string-array name="behavior_after_disaster">
+        <item>전 상황</item>
+        <item>후 상황</item>
+    </string-array>
+    <string-array name="behavior_location_building">
+        <item>실내</item>
+        <item>실외</item>
+    </string-array>
+</resources>

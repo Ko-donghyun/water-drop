@@ -5,49 +5,92 @@
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:gravity="center">
+    android:layout_marginTop="30dp">
 
     <LinearLayout
         android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:layout_marginLeft="30dp"
         android:layout_marginRight="30dp"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:background="#f1f1f1">
+        android:background="#f1f1f1"
+        android:orientation="vertical">
 
         <TextView
             android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:padding="5dp"
             android:paddingLeft="10dp"
             android:paddingRight="10dp"
-            android:textSize="24dp"
-            android:padding="10dp"
-            android:gravity="center"
-            android:text="삭제 알림"
-            android:textColor="#000000"/>
+            android:text="행동요령 추가"
+            android:textColor="#000000"
+            android:textSize="24dp" />
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="1dp"
-            android:layout_marginRight="10dp"
             android:layout_marginLeft="10dp"
-            android:orientation="vertical"
-            android:background="#dcdcdc"/>
+            android:layout_marginRight="10dp"
+            android:background="#dcdcdc"
+            android:orientation="vertical" />
 
-        <TextView
-            android:id="@+id/dialog_delete_item"
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_marginBottom="20dp"
-            android:layout_marginTop="10dp"
-            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <Spinner
+                android:id="@+id/behavior_location_geograph"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:entries="@array/behavior_location_geograph"
+                android:gravity="center"
+                android:textColor="#000000"
+                android:textSize="12dp" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <Spinner
+                    android:id="@+id/behavior_after_disaster"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:entries="@array/behavior_after_disaster"
+                    android:gravity="center"
+                    android:textColor="#000000"
+                    android:textSize="12dp" />
+
+                <Spinner
+                    android:id="@+id/behavior_location_building"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:entries="@array/behavior_location_building"
+                    android:gravity="center"
+                    android:textColor="#000000"
+                    android:textSize="12dp" />
+
+            </LinearLayout>
+        </LinearLayout>
+
+        <EditText
+            android:id="@+id/behavior_content"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="5dp"
             android:gravity="center"
+            android:hint="행동요령을 작성해주세요"
             android:paddingLeft="10dp"
             android:paddingRight="10dp"
-            android:text="subTitle"
             android:textColor="#000000"
-            android:textSize="16dp" />
+            android:textSize="16dp">
+
+        <requestFocus />
+        </EditText>
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -58,20 +101,20 @@
             android:orientation="horizontal">
 
             <Button
+                android:id="@+id/dialog_cancel"
                 android:layout_width="0dp"
-                android:layout_weight="1"
                 android:layout_height="wrap_content"
-                android:textSize="16dp"
+                android:layout_weight="1"
                 android:text="닫기"
-                android:id="@+id/dialog_cancel"/>
+                android:textSize="12dp" />
 
             <Button
+                android:id="@+id/dialog_okay"
                 android:layout_width="0dp"
-                android:layout_weight="1"
                 android:layout_height="wrap_content"
-                android:textSize="16dp"
+                android:layout_weight="1"
                 android:text="추가"
-                android:id="@+id/dialog_okay"/>
+                android:textSize="12dp" />
 
         </LinearLayout>
 

@@ -17,8 +17,12 @@ public class CheckListViewAdapter2 extends BaseAdapter {
     // Adapter에 추가된 데이터를 저장하기 위한 ArrayList
     private ArrayList<CheckList> listViewItemList = new ArrayList<CheckList>();
 
+    boolean isLocal;
+
     // TextListViewAdapter 생성자
-    public CheckListViewAdapter2() {
+    public CheckListViewAdapter2(boolean isLocal) {
+        this.isLocal = isLocal;
+
 
     }
 
@@ -48,7 +52,7 @@ public class CheckListViewAdapter2 extends BaseAdapter {
 
         // 아이템 내 각 위젯에 데이터 반영
         todo.setText(listViewItem.getTodo());
-        checkBox.setChecked(true);
+        checkBox.setChecked(isLocal);
 
         return convertView;
     }
