@@ -458,6 +458,9 @@ public class MainActivity extends Activity {
         city1 = addresses.get(0).getLocality();
         city3 = addresses.get(0).getThoroughfare();
 
+        Log.d("city1", city1);
+        Log.d("city3", city3);
+
         SQLiteDatabase sqLiteDatabase = regionDataBase.getReadableDatabase();
         Cursor cursor = sqLiteDatabase.rawQuery("SELECT DISTINCT _id, city1, city2, city3 FROM region WHERE city1 = ? AND city3 = ?", new String [] {city1, city3});
 
@@ -465,6 +468,7 @@ public class MainActivity extends Activity {
             cursor.moveToFirst();
             do {
                 city2 = cursor.getString(2);
+                Log.d("city2", city2);
             } while (cursor.moveToNext());
 
             cursor.close();
