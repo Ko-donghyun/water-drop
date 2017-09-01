@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.v4.widget.DrawerLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.v4.widget.DrawerLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/side_drawer"
-    tools:context=".MainActivity" >
+    tools:context=".MainActivity">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -17,7 +17,7 @@
             android:id="@+id/main_title_bar"
             android:layout_width="match_parent"
             android:layout_height="50dp"
-            android:background="#3F51B5"
+            android:background="#47baa1"
             android:orientation="horizontal">
 
             <ImageView
@@ -48,7 +48,7 @@
                 android:layout_width="0dp"
                 android:layout_height="40dp"
                 android:layout_weight="1"
-                android:background="#303F9F"
+                android:background="#358675"
                 android:gravity="center"
                 android:padding="5dp"
                 android:text="chat_bot" />
@@ -61,7 +61,7 @@
                 android:text="check_list"
                 android:id="@+id/check_list_page_tab"
                 android:gravity="center"
-                android:background="#3F51B5"/>
+                android:background="#47baa1"/>
 
         </LinearLayout>
 
@@ -70,7 +70,8 @@
             android:layout_height="match_parent"
             android:id="@+id/main_view_flipper">
 
-            <include layout="@layout/chat_bot" />
+            <include layout="@layout/chat_bot"
+                android:layout_height="match_parent" />
             <include layout="@layout/check_list" />
 
         </ViewFlipper>
@@ -104,38 +105,80 @@
             android:layout_height="200dp"
             android:gravity="center"
             android:orientation="vertical"
-            android:background="@drawable/header">
+            android:background="@drawable/side_nav_bar">
             <ImageView
                 android:layout_width="match_parent"
                 android:layout_height="100dp"
                 android:src="@drawable/logo"/>
         </LinearLayout>
-        <!--<TextView
-            android:layout_margin="10dp"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="drawer"
-            android:gravity="center"
-            />
 
-        <TextView
-            android:layout_margin="10dp"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="지역 재 설정"
-            android:gravity="center"
-            android:id="@+id/region_setting"
-            />
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+                    <ImageView
+                        android:layout_margin="10dp"
+                        android:layout_width="15dp"
+                        android:layout_height="15dp"
+                        android:gravity="center_vertical"
+                        android:src="@drawable/logo"/>
+                        <TextView
+                            android:layout_margin="10dp"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:textSize="15dp"
+                            android:text="drawer"
+                            android:gravity="left|center_vertical"
+                            />
 
+                    </LinearLayout>
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+                    <ImageView
+                        android:layout_margin="10dp"
+                        android:layout_width="15dp"
+                        android:gravity="center_vertical"
+                        android:layout_height="15dp"
+                        android:src="@drawable/blueprint"/>
+                        <TextView
+                            android:layout_margin="10dp"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="지역 재 설정"
+                            android:textSize="15dp"
+                            android:gravity="left|center_vertical"
+                            android:id="@+id/region_setting"
+                            />
+                    </LinearLayout>
 
-        <TextView
-            android:layout_margin="10dp"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="체크리스트 수정"
-            android:gravity="center"
-            android:id="@+id/check_list_setting"
-            />
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+                    <ImageView
+                        android:layout_margin="10dp"
+                        android:layout_width="15dp"
+                        android:gravity="center_vertical"
+                        android:layout_height="15dp"
+                        android:src="@drawable/checked"/>
+                        <TextView
+                            android:layout_margin="10dp"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="체크리스트 수정"
+                            android:textSize="15dp"
+                            android:gravity="left|center_vertical"
+                            android:id="@+id/check_list_setting"
+                            />
+
+                    </LinearLayout>
+                </LinearLayout>
 
         <LinearLayout
             android:layout_width="250dp"
@@ -151,7 +194,9 @@
                 android:layout_margin="0dp"
                 android:text="푸시 설정" />
         </LinearLayout>
-        </LinearLayout>-->
+
+
+</LinearLayout>
 
 
     </LinearLayout>

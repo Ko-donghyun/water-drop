@@ -12,21 +12,18 @@ import android.support.v4.widget.DrawerLayout;
 import android.view.View;
 import android.view.animation.AnimationUtils;
 import android.widget.AdapterView;
-import android.widget.CompoundButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.Spinner;
 import android.widget.TextView;
-import android.widget.Toast;
 import android.widget.ViewFlipper;
 
 import com.waterdrop.k.waterdrop.DataBase.CheckList;
-import com.waterdrop.k.waterdrop.Dialog.CheckListAddDialog;
 import com.waterdrop.k.waterdrop.ListViewAdapter.CheckListViewAdapter;
 import com.waterdrop.k.waterdrop.SpinnerAdapter.MyCheckListSpinnerAdapter;
 
-public class MainActivity extends Activity {
+public class MainActivity extends Activity{
     TextView checkListPageTab;
     TextView chatBotPageTab;
     TextView checkListSetting;
@@ -67,7 +64,6 @@ public class MainActivity extends Activity {
         if (Build.VERSION.SDK_INT >= 21) {
             getWindow().setStatusBarColor(Color.BLACK);
         }
-
         mainViewFlipper = (ViewFlipper) findViewById(R.id.main_view_flipper);
         mainViewFlipper.setInAnimation(AnimationUtils.loadAnimation(this, R.anim.push_left_in));
         mainViewFlipper.setOutAnimation(AnimationUtils.loadAnimation(this, R.anim.push_left_out));
@@ -115,8 +111,8 @@ public class MainActivity extends Activity {
                     mainViewFlipper.showPrevious();
                     pageTabFlag = true;
                 }
-                checkListPageTab.setBackgroundColor(Color.parseColor("#3F51B5"));
-                chatBotPageTab.setBackgroundColor(Color.parseColor("#303F9F"));
+                checkListPageTab.setBackgroundColor(Color.parseColor("#47baa1"));
+                chatBotPageTab.setBackgroundColor(Color.parseColor("#358675"));
             }
         });
 
@@ -130,11 +126,10 @@ public class MainActivity extends Activity {
                     mainViewFlipper.showNext();
                     pageTabFlag = true;
                 }
-                chatBotPageTab.setBackgroundColor(Color.parseColor("#3F51B5"));
-                checkListPageTab.setBackgroundColor(Color.parseColor("#303F9F"));
+                chatBotPageTab.setBackgroundColor(Color.parseColor("#47baa1"));
+                checkListPageTab.setBackgroundColor(Color.parseColor("#358675"));
             }
         });
-
         checkListSetting.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -234,4 +229,6 @@ public class MainActivity extends Activity {
 
         myCheckListView.setAdapter(checkListViewAdapter);
     }
+
+
 }
