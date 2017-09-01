@@ -37,8 +37,7 @@
 
         <TextView
             android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="1"
+            android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
             android:layout_marginBottom="20dp"
             android:paddingLeft="10dp"
@@ -58,15 +57,15 @@
             android:orientation="horizontal">
 
             <Button
+                android:id="@+id/dialog_delete_cancel"
                 android:layout_width="0dp"
-                android:layout_weight="1"
                 android:layout_height="45dp"
-                android:background="@drawable/header"
-                android:textColor="#ffffff"
                 android:layout_marginRight="1dp"
-                android:textSize="16dp"
+                android:layout_weight="1"
+                android:background="@drawable/header"
                 android:text="취소"
-                android:id="@+id/dialog_delete_cancel"/>
+                android:textColor="#ffffff"
+                android:textSize="16dp" />
 
             <Button
                 android:layout_width="0dp"
