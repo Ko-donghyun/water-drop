@@ -55,12 +55,6 @@ public class MyService extends Service {
     public int onStartCommand(Intent intent, int flags, int startId) {
         // 서비스가 호출될 때마다 실행
 //        Log.d("test", "서비스의 onStartCommand");
-        lm.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, // 등록할 위치제공자
-                3600000, // 통지사이의 최소 시간간격 (miliSecond)
-//                10000, // 통지사이의 최소 시간간격 (miliSecond), // 통지사이의 최소 시간간격 (miliSecond)
-                1, // 통지사이의 최소 변경거리 (m)
-                mLocationListener);
-
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
             // TODO: Consider calling
             //    ActivityCompat#requestPermissions
@@ -74,6 +68,11 @@ public class MyService extends Service {
             lm.requestLocationUpdates(LocationManager.GPS_PROVIDER, // 등록할 위치제공자
                     3600000, // 통지사이의 최소 시간간격 (miliSecond)
 //                    10000, // 통지사이의 최소 시간간격 (miliSecond)
+                    1, // 통지사이의 최소 변경거리 (m)
+                    mLocationListener);
+            lm.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, // 등록할 위치제공자
+                    3600000, // 통지사이의 최소 시간간격 (miliSecond)
+//                10000, // 통지사이의 최소 시간간격 (miliSecond), // 통지사이의 최소 시간간격 (miliSecond)
                     1, // 통지사이의 최소 변경거리 (m)
                     mLocationListener);
         }
@@ -165,7 +164,7 @@ public class MyService extends Service {
 
             // 서버 통신
             OkHttpHelper ok = new OkHttpHelper();
-            ok.updateUrl("http://10.10.96.155:8080/");
+            //ok.updateUrl("http://10.10.96.155:8080/");
             ok.get("api/user/addcurr_Location?si=" + city1 + "&gu=" + city2 + "&dong=" + city3 + "&device_token=" + token, new Callback() {
                 @Override
                 public void onFailure(Call call, IOException e) {

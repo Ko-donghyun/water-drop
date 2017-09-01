@@ -8,31 +8,26 @@ import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Color;
-import android.media.audiofx.BassBoost;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
-import android.provider.Settings;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.WindowManager;
-import android.view.animation.AnimationUtils;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.Spinner;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.waterdrop.k.waterdrop.DataBase.CheckList;
 import com.waterdrop.k.waterdrop.Dialog.CheckListAddDialog;
 import com.waterdrop.k.waterdrop.Dialog.CheckListInventoryEditDialog;
 import com.waterdrop.k.waterdrop.Dialog.ItemDeleteDialog;
-import com.waterdrop.k.waterdrop.ListViewAdapter.CheckListViewAdapter;
 import com.waterdrop.k.waterdrop.ListViewAdapter.CheckListViewAdapter2;
 import com.waterdrop.k.waterdrop.ListViewAdapter.CheckListViewAdapter3;
 import com.waterdrop.k.waterdrop.ListViewAdapter.TextListViewAdapter;
@@ -42,14 +37,9 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.io.IOException;
-import java.sql.Array;
 
 import okhttp3.Call;
 import okhttp3.Callback;
-import okhttp3.FormBody;
-import okhttp3.OkHttpClient;
-import okhttp3.Request;
-import okhttp3.RequestBody;
 import okhttp3.Response;
 
 public class CheckListSettingActivity extends Activity {
@@ -59,7 +49,7 @@ public class CheckListSettingActivity extends Activity {
     public static SharedPreferences.Editor lastSelectedCheckListInventoryIdEditor;
     Long lastSelectedCheckListInventoryId;
 
-    TextView checkListItemAddButton;
+    ImageView checkListItemAddButton;
     ImageView checkListInventoryEditButton;
 
     CheckListAddDialog checkListAddDialog;
@@ -105,7 +95,7 @@ public class CheckListSettingActivity extends Activity {
         lastSelectedCheckListInventoryId = lastSelectedCheckListInventoryIdPreference.getLong("lastSelectedCheckListInventoryId", 1);
 
 
-        checkListItemAddButton = (TextView) findViewById(R.id.check_list_item_add_button);
+        checkListItemAddButton = (ImageView) findViewById(R.id.check_list_item_add_button);
         checkListInventoryEditButton = (ImageView) findViewById(R.id.check_list_inventory_edit_button);
         myCheckListDataBase = new CheckList(this, myCheckListDataBaseName, null, myCheckListDataBaseVersion);
 

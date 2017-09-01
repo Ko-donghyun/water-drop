@@ -11,18 +11,19 @@
         android:layout_height="wrap_content"
         android:layout_marginLeft="30dp"
         android:layout_marginRight="30dp"
-        android:background="#f1f1f1"
+        android:background="@drawable/dialog_back"
         android:gravity="center"
         android:orientation="vertical">
 
         <TextView
             android:id="@+id/dialog_title"
+            android:background="#ffffff"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center"
             android:padding="10dp"
             android:text="지역 추가"
-            android:textColor="#000000"
+            android:textColor="#47baa1"
             android:textSize="22dp" />
 
         <TextView
@@ -54,24 +55,27 @@
                 android:layout_height="match_parent"
                 android:id="@+id/add_region_view_flipper">
 
-                <ListView
+                <GridView
+                    android:id="@+id/city_1"
+                    android:numColumns="2"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:id="@+id/city_1">
+                    android:layout_height="match_parent">
 
-                </ListView>
-                <ListView
+                </GridView>
+                <GridView
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
+                    android:numColumns="2"
                     android:id="@+id/city_2">
 
-                </ListView>
-                <ListView
+                </GridView>
+                <GridView
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
+                    android:numColumns="2"
                     android:id="@+id/city_3">
 
-                </ListView>
+                </GridView>
 
             </ViewFlipper>
 
@@ -97,18 +101,24 @@
             <Button
                 android:layout_width="0dp"
                 android:layout_weight="1"
-                android:layout_height="match_parent"
-                android:textSize="12dp"
+                android:layout_height="45dp"
+                android:background="@drawable/header"
+                android:textColor="#ffffff"
+                android:layout_marginRight="1dp"
+                android:textSize="16dp"
                 android:text="취소"
                 android:id="@+id/cancel_button"/>
 
             <Button
+                android:id="@+id/okay_button"
                 android:layout_width="0dp"
+                android:layout_height="45dp"
                 android:layout_weight="1"
-                android:layout_height="match_parent"
-                android:textSize="12dp"
+                android:background="@drawable/header"
+                android:layout_marginLeft="1dp"
                 android:text="추가"
-                android:id="@+id/okay_button"/>
+                android:textColor="#ffffff"
+                android:textSize="16dp" />
 
         </LinearLayout>
 

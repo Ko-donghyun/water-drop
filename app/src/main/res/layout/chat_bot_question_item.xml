@@ -1,24 +1,26 @@
 <?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+android:layout_width="match_parent"
+android:layout_height="wrap_content">
+
 <LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical"
-    android:layout_width="match_parent"
+    android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:background="#ffffff"
-    android:id="@+id/item_layout">
+    android:layout_alignParentRight="true"
+    android:background="@drawable/rightchat"
+    android:id="@+id/item_layout"
+    android:orientation="vertical"
+    android:paddingBottom="10dp">
 
     <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:gravity="right"
-        android:paddingLeft="80dp"
-        android:layout_marginLeft="20dp"
-        android:layout_marginRight="20dp"
-        android:padding="5dp"
-        android:textColor="#000000"
         android:id="@+id/question"
-        android:textSize="16dp"
-        android:text="최대 20자"/>
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:maxWidth="100dp"
+        android:padding="5dp"
+        android:gravity="left"
+        android:textColor="#ffffff" />
 
 </LinearLayout>
+
+</RelativeLayout>

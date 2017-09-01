@@ -19,6 +19,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
 import android.support.v4.app.ActivityCompat;
+import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.util.Log;
 import android.view.View;
@@ -26,27 +27,21 @@ import android.view.animation.AnimationUtils;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.Button;
-import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.Spinner;
 import android.widget.TextView;
-import android.widget.Toast;
 import android.widget.ViewFlipper;
 
 import com.waterdrop.k.waterdrop.DataBase.CheckList;
 import com.waterdrop.k.waterdrop.DataBase.Region;
-import com.waterdrop.k.waterdrop.Dialog.CheckListAddDialog;
 import com.waterdrop.k.waterdrop.ListViewAdapter.ChatBotListViewAdapter;
 import com.waterdrop.k.waterdrop.ListViewAdapter.CheckListViewAdapter;
-import com.waterdrop.k.waterdrop.ListViewAdapter.CheckListViewAdapter3;
-import com.waterdrop.k.waterdrop.ListViewAdapter.TextListViewAdapter;
 import com.waterdrop.k.waterdrop.SpinnerAdapter.MyCheckListSpinnerAdapter;
 
 import org.json.JSONArray;
-import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.IOException;
@@ -85,7 +80,7 @@ public class MainActivity extends Activity {
     public static SharedPreferences.Editor lastSelectedCheckListInventoryIdEditor;
     Long lastSelectedCheckListInventoryId;
 
-    TextView checkListItemAddButton;
+    ImageView checkListItemAddButton;
 
     CheckList myCheckListDataBase;
     final String myCheckListDataBaseName = "mychecklist.db";
@@ -148,20 +143,7 @@ public class MainActivity extends Activity {
         regionSetting = (TextView) findViewById(R.id.region_setting);
 
         sideDrawerButton = (ImageView) findViewById(R.id.side_drawer_button);
-        temp = (TextView) findViewById(R.id.temp);
 
-        temp.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if (isInDanger) {
-                    temp.setText("침수 위험이 없습니다.");
-                    isInDanger = false;
-                } else {
-                    temp.setText("침수 위험이 있습니다.");
-                    isInDanger = true;
-                }
-            }
-        });
 
         sideDrawerButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -183,8 +165,8 @@ public class MainActivity extends Activity {
                     mainViewFlipper.showPrevious();
                     pageTabFlag = true;
                 }
-                checkListPageTab.setBackgroundColor(Color.parseColor("#DDDDDD"));
-                chatBotPageTab.setBackgroundColor(Color.parseColor("#CCCCCC"));
+                checkListPageTab.setBackgroundColor(Color.parseColor("#47baa1"));
+                chatBotPageTab.setBackgroundColor(Color.parseColor("#358675"));
             }
         });
 
@@ -199,8 +181,8 @@ public class MainActivity extends Activity {
                     hideKeyboard(questionEdit);
                     pageTabFlag = true;
                 }
-                chatBotPageTab.setBackgroundColor(Color.parseColor("#DDDDDD"));
-                checkListPageTab.setBackgroundColor(Color.parseColor("#CCCCCC"));
+                chatBotPageTab.setBackgroundColor(Color.parseColor("#47baa1"));
+                checkListPageTab.setBackgroundColor(Color.parseColor("#358675"));
             }
         });
 
@@ -233,7 +215,7 @@ public class MainActivity extends Activity {
         lastSelectedCheckListInventoryId = lastSelectedCheckListInventoryIdPreference.getLong("lastSelectedCheckListInventoryId", 1);
 
 
-        checkListItemAddButton = (TextView) findViewById(R.id.check_list_item_add_button);
+        checkListItemAddButton = (ImageView) findViewById(R.id.check_list_item_add_button);
         myCheckListDataBase = new CheckList(this, myCheckListDataBaseName, null, myCheckListDataBaseVersion);
 
         checkListViewAdapter = new CheckListViewAdapter(MainActivity.this);
@@ -460,7 +442,6 @@ public class MainActivity extends Activity {
 
         Log.d("city1", city1);
         Log.d("city3", city3);
-
         SQLiteDatabase sqLiteDatabase = regionDataBase.getReadableDatabase();
         Cursor cursor = sqLiteDatabase.rawQuery("SELECT DISTINCT _id, city1, city2, city3 FROM region WHERE city1 = ? AND city3 = ?", new String [] {city1, city3});
 
@@ -475,14 +456,13 @@ public class MainActivity extends Activity {
         }
         sqLiteDatabase.close();
 
-
         SharedPreferences tokenPreference;
         tokenPreference = getSharedPreferences("token", Activity.MODE_PRIVATE);
         String token = tokenPreference.getString("token", "null");
 
         // 서버 통신
         OkHttpHelper ok = new OkHttpHelper();
-        ok.updateUrl("http://10.10.96.155:8080/");
+        //ok.updateUrl("http://10.10.96.155:8080/");
         ok.get("api/user/addcurr_Location?si=" + city1 + "&gu=" + city2 + "&dong=" + city3 + "&device_token=" + token, new Callback() {
             @Override
             public void onFailure(Call call, IOException e) {
@@ -500,20 +480,11 @@ public class MainActivity extends Activity {
                 }
             }
         });
-//        Log.d("adsfd", addresses.get(0).getLocality());
-//        Log.d("adsfd", addresses.get(0).getUrl());
-//        Log.d("adsfd", addresses.get(0).ge);
-//        Log.d("adsfd", addresses.get(0).getAddressLine(2));
     }
 
     public void getCurrentLocation() {
 
         LocationManager lm = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
-        lm.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, // 등록할 위치제공자
-                100, // 통지사이의 최소 시간간격 (miliSecond)
-                1, // 통지사이의 최소 변경거리 (m)
-                mLocationListener);
-
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
             // TODO: Consider calling
             //    ActivityCompat#requestPermissions
@@ -525,6 +496,10 @@ public class MainActivity extends Activity {
 
         } else {
             lm.requestLocationUpdates(LocationManager.GPS_PROVIDER, // 등록할 위치제공자
+                    100, // 통지사이의 최소 시간간격 (miliSecond)
+                    1, // 통지사이의 최소 변경거리 (m)
+                    mLocationListener);
+            lm.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, // 등록할 위치제공자
                     100, // 통지사이의 최소 시간간격 (miliSecond)
                     1, // 통지사이의 최소 변경거리 (m)
                     mLocationListener);
@@ -616,4 +591,18 @@ public class MainActivity extends Activity {
 //            Log.d("test", "onStatusChanged, provider:" + provider + ", status:" + status + " ,Bundle:" + extras);
         }
     };
+    @Override
+    public void onBackPressed() {
+        /*if(!isFABOpen){
+            super.onBackPressed();
+        }else{
+            closeFABMenu();
+        }*/
+        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.side_drawer);
+        if (drawer.isDrawerOpen(GravityCompat.START)) {
+            drawer.closeDrawer(GravityCompat.START);
+        } else {
+            super.onBackPressed();
+        }
+    }
 }

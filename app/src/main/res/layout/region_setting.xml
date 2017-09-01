@@ -8,11 +8,12 @@
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="지역 수정 뷰"/>
+        android:text="나의 지역 리스트"/>
 
     <ListView
         android:layout_width="match_parent"
-        android:layout_height="200dp"
+        android:layout_height="300dp"
+        android:divider="#00000000"
         android:id="@+id/my_region_list">
 
     </ListView>
@@ -20,6 +21,10 @@
     <Button
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:background="@drawable/header"
+        android:layout_marginLeft="1dp"
+        android:layout_marginRight="1dp"
+        android:textColor="#ffffff"
         android:text="지역 추가"
         android:id="@+id/my_region_add_button"
         />

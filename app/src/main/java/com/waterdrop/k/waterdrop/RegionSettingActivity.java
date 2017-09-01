@@ -259,7 +259,7 @@ public class RegionSettingActivity extends Activity {
 
         // 서버 통신
         OkHttpHelper ok = new OkHttpHelper();
-        ok.updateUrl("http://10.10.96.155:8080/");
+        //ok.updateUrl("http://10.10.96.155:8080/");
         ok.get("api/user/addLocation?si=" + city1 + "&gu=" + city2 + "&dong=" + city3 + "&device_token=" + token, new Callback() {
             @Override
             public void onFailure(Call call, IOException e) {

@@ -8,7 +8,7 @@ import android.view.WindowManager;
 import android.view.animation.AnimationUtils;
 import android.widget.AdapterView;
 import android.widget.Button;
-import android.widget.ListView;
+import android.widget.GridView;
 import android.widget.TextView;
 import android.widget.ViewFlipper;
 
@@ -21,9 +21,9 @@ public class RegionAddDialog extends Dialog {
     private AdapterView.OnItemClickListener city1ClickListener;
     private AdapterView.OnItemClickListener city2ClickListener;
     private AdapterView.OnItemClickListener city3ClickListener;
-    ListView city1ListView;
-    ListView city2ListView;
-    ListView city3ListView;
+    GridView city1GridView;
+    GridView city2GridView;
+    GridView city3GridView;
     TextListViewAdapter city1ListViewAdapter;
     TextListViewAdapter city2ListViewAdapter;
     TextListViewAdapter city3ListViewAdapter;
@@ -52,17 +52,17 @@ public class RegionAddDialog extends Dialog {
         regionListViewFlipper = (ViewFlipper) findViewById(R.id.add_region_view_flipper);
         city = (TextView) findViewById(R.id.city_text);
 
-        city1ListView = (ListView) findViewById(R.id.city_1);
-        city2ListView = (ListView) findViewById(R.id.city_2);
-        city3ListView = (ListView) findViewById(R.id.city_3);
+        city1GridView = (GridView) findViewById(R.id.city_1);
+        city2GridView = (GridView) findViewById(R.id.city_2);
+        city3GridView = (GridView) findViewById(R.id.city_3);
 
-        city1ListView.setAdapter(city1ListViewAdapter);
-        city2ListView.setAdapter(city2ListViewAdapter);
-        city3ListView.setAdapter(city3ListViewAdapter);
+        city1GridView.setAdapter(city1ListViewAdapter);
+        city2GridView.setAdapter(city2ListViewAdapter);
+        city3GridView.setAdapter(city3ListViewAdapter);
 
-        city1ListView.setOnItemClickListener(city1ClickListener);
-        city2ListView.setOnItemClickListener(city2ClickListener);
-        city3ListView.setOnItemClickListener(city3ClickListener);
+        city1GridView.setOnItemClickListener(city1ClickListener);
+        city2GridView.setOnItemClickListener(city2ClickListener);
+        city3GridView.setOnItemClickListener(city3ClickListener);
 
         okayButton.setOnClickListener(okayClickListener);
         cancelButton.setOnClickListener(cancelClickListener);
@@ -86,13 +86,13 @@ public class RegionAddDialog extends Dialog {
     public void updateCity2Adapter(TextListViewAdapter city2ListViewAdapter) {
         this.city2ListViewAdapter = city2ListViewAdapter;
 
-        city2ListView.setAdapter(city2ListViewAdapter);
+        city2GridView.setAdapter(city2ListViewAdapter);
 
     }
     public void updateCity3Adapter(TextListViewAdapter city3ListViewAdapter) {
         this.city3ListViewAdapter = city3ListViewAdapter;
 
-        city3ListView.setAdapter(city3ListViewAdapter);
+        city3GridView.setAdapter(city3ListViewAdapter);
     }
     public void nextViewFlipper() {
         regionListViewFlipper.setInAnimation(AnimationUtils.loadAnimation(getContext(), R.anim.push_left_in));
