@@ -255,7 +255,7 @@ public class MainActivity extends Activity {
          */
         regionDataBase = new Region(this, regionDataBaseName, null, regionDataBaseVersion);
 
-        chatBotListViewAdapter = new ChatBotListViewAdapter();
+        chatBotListViewAdapter = new ChatBotListViewAdapter(MainActivity.this);
         chatBotListView = (ListView) findViewById(R.id.chat_bot_list_view);
         chatBotListView.setAdapter(chatBotListViewAdapter);
         sendButton = (Button) findViewById(R.id.send_button);
