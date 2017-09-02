@@ -1,26 +1,33 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-android:layout_width="match_parent"
-android:layout_height="wrap_content">
-
 <LinearLayout
-    android:layout_width="wrap_content"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_alignParentRight="true"
-    android:background="@drawable/rightchat"
-    android:id="@+id/item_layout"
-    android:orientation="vertical"
-    android:paddingBottom="10dp">
+    android:gravity="right"
+    android:id="@+id/parent_layout">
 
-    <TextView
-        android:id="@+id/question"
+    <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:maxWidth="300dp"
+        android:id="@+id/item_layout"
+        android:orientation="vertical"
+        android:background="@drawable/rightchat"
+        android:gravity="center_vertical"
         android:padding="5dp"
-        android:gravity="left"
-        android:textColor="#ffffff" />
+        android:layout_marginBottom="10dp">
+
+        <TextView
+            android:id="@+id/question"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:maxWidth="300dp"
+            android:padding="5dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:text="dfsddddsfdsfdsff"
+            android:gravity="center_vertical"
+            android:textColor="#ffffff" />
+
+    </LinearLayout>
 
 </LinearLayout>
-
-</RelativeLayout>

@@ -1,10 +1,12 @@
 package com.waterdrop.k.waterdrop.ListViewAdapter;
 
 import android.content.Context;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.waterdrop.k.waterdrop.ListViewItem.TextItem2;
@@ -20,9 +22,13 @@ public class ChatBotListViewAdapter extends BaseAdapter {
     // Adapter에 추가된 데이터를 저장하기 위한 ArrayList
     private ArrayList<TextItem2> listViewItemList = new ArrayList<TextItem2>();
 
-    // TextListViewAdapter 생성자
-    public ChatBotListViewAdapter() {
+    TextView answer;
+    TextView question;
+    private LayoutInflater mInflater;
 
+    // TextListViewAdapter 생성자
+    public ChatBotListViewAdapter(Context context) {
+        this.mInflater = (LayoutInflater) context.getSystemService (Context.LAYOUT_INFLATER_SERVICE);
     }
 
     // Adapter에 사용되는 데이터의 개수를 리턴 : 필수 구현
@@ -34,32 +40,38 @@ public class ChatBotListViewAdapter extends BaseAdapter {
     // position에 위치한 데이터를 화면에 출력하는데 사용될 View를 리턴 : 필수 구현
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-        final Context context = parent.getContext();
-        int viewType = getItemViewType(position) ;
-
+        ViewHolder holder = null;
+        int type = getItemViewType(position);
+//        System.out.println("getView " + position + " " + convertView + " type = " + type);
         if (convertView == null) {
-            LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE) ;
-
-            // Data Set(listViewItemList)에서 position에 위치한 데이터 참조 획득
-            TextItem2 listViewItem = listViewItemList.get(position);
-
-            switch (viewType) {
+            holder = new ViewHolder();
+            switch (type) {
                 case 0:
-                    convertView = inflater.inflate(R.layout.chat_bot_answer_item, parent, false);
-                    TextView answer = (TextView) convertView.findViewById(R.id.answer) ;
-
-                    answer.setText(listViewItem.getText());
+                    convertView = mInflater.inflate(R.layout.chat_bot_answer_item, null);
+                    holder.textView = (TextView)convertView.findViewById(R.id.answer);
+                    holder.linearLayout = (LinearLayout) convertView.findViewById(R.id.item_layout);
+                    holder.linearLayout2 = (LinearLayout) convertView.findViewById(R.id.parent_layout);
                     break;
                 case 1:
-                    convertView = inflater.inflate(R.layout.chat_bot_question_item, parent, false);
-
-                    TextView question = (TextView) convertView.findViewById(R.id.question) ;
-
-                    question.setText(listViewItem.getText());
+                    convertView = mInflater.inflate(R.layout.chat_bot_question_item, null);
+                    holder.textView = (TextView)convertView.findViewById(R.id.question);
+                    holder.linearLayout = (LinearLayout) convertView.findViewById(R.id.item_layout);
+                    holder.linearLayout2 = (LinearLayout) convertView.findViewById(R.id.parent_layout);
                     break;
             }
+            convertView.setTag(holder);
+        } else {
+            holder = (ViewHolder)convertView.getTag();
         }
-
+        holder.textView.setText(listViewItemList.get(position).getText());
+        if (type == 0) {
+            holder.linearLayout.setBackgroundResource(R.drawable.leftchat);
+//            holder.linearLayout.setAli
+            holder.linearLayout2.setGravity(Gravity.LEFT);
+        } else {
+            holder.linearLayout.setBackgroundResource(R.drawable.rightchat);
+            holder.linearLayout2.setGravity(Gravity.RIGHT);
+        }
         return convertView;
     }
 
@@ -93,5 +105,15 @@ public class ChatBotListViewAdapter extends BaseAdapter {
 
     public void removeItem(int index) {
         listViewItemList.remove(listViewItemList.get(index));
+    }
+
+
+    public static class ViewHolder {
+        public TextView textView;
+        public LinearLayout linearLayout;
+        public LinearLayout linearLayout2;
+    }
+    public static class ViewHolder2 {
+        public TextView question;
     }
 }
