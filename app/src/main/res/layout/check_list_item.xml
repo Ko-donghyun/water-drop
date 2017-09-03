@@ -12,7 +12,7 @@
 
     <CheckBox
         android:layout_width="30dp"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:layout_margin="5dp"
         android:gravity="center"
         android:layout_gravity="center"
@@ -28,7 +28,7 @@
         android:padding="5dp"
         android:textColor="#000000"
         android:id="@+id/text_item"
-        android:textSize="16dp"
+        android:textSize="12dp"
         android:text="최대 20자"/>
 
 </LinearLayout>

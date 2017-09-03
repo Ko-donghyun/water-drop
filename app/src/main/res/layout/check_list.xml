@@ -42,4 +42,12 @@
 
     </LinearLayout>
 
+    <android.support.design.widget.FloatingActionButton
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_gravity="right"
+        android:id="@+id/share"
+        android:src="@android:drawable/ic_dialog_email"
+        />
+
 </LinearLayout>

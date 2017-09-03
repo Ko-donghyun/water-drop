@@ -18,6 +18,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
@@ -120,6 +121,8 @@ public class MainActivity extends Activity {
     String city3;
 
     boolean sendable = true;
+
+    FloatingActionButton share;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -480,6 +483,31 @@ public class MainActivity extends Activity {
                 }
             }
         });
+
+        share = (FloatingActionButton) findViewById(R.id.share);
+        share.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent msg = new Intent(Intent.ACTION_SEND);
+
+                msg.addCategory(Intent.CATEGORY_DEFAULT);
+
+                msg.putExtra(Intent.EXTRA_SUBJECT, "체크리스트");
+
+                String content = "";
+                for (int i = 0; i < checkListViewAdapter.getCount(); i++) {
+                    content += checkListViewAdapter.getItem(i).getTodo() + "\n";
+                }
+                msg.putExtra(Intent.EXTRA_TEXT, content);
+
+                msg.putExtra(Intent.EXTRA_TITLE, "체크리스트");
+
+                msg.setType("text/plain");
+
+                startActivity(Intent.createChooser(msg, "공유"));
+            }
+        });
+
     }
 
     public void getCurrentLocation() {

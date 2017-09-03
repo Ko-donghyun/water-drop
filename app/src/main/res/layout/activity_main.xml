@@ -60,7 +60,7 @@
                 android:textSize="18dp"
                 android:gravity="center"
                 android:padding="5dp"
-                android:text="챗봇" />
+                android:text="방울이" />
 
             <TextView
                 android:layout_width="0dp"
